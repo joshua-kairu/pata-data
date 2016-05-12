@@ -1,3 +1,34 @@
 <resources>
-    <string name="app_name">PataData</string>
+
+    <string name="app_name">Pata Data</string>
+
+    <!-- Strings for the nav drawer -->
+
+    <string name="dataset">Dataset</string>
+    <string name="start_year">Start Year</string>
+    <string name="end_year">End Year</string>
+    <string name="dash">-</string>
+
+    <!-- Strings for when there is no dataset selected yet -->
+
+    <string name="no_datasets">No dataset to display yet. :-/</string>
+
+    <!--<string name="request_for_selection_part_one">Please press</string>-->
+    <!--<string name="request_for_selection_part_two">\tto select a dataset to view</string>-->
+
+    <!-- String for waiting for a fetch of the dataset -->
+
+    <string name="loading">Loading. Please wait. . .</string>
+
+    <!-- String for when there is an error -->
+
+    <string name="error">Sorry. Something went amiss.</string>
+    <!--<string name="suggestion_part_one">Please press</string>-->
+    <!--<string name="suggestion_part_two"-->
+
+    <!-- Strings for the tool bar -->
+
+    <string name="toolbar_edit">Edit</string>
+    <string name="toolbar_refresh">Refresh</string>
+
 </resources>
