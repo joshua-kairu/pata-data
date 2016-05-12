@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Copyright 2016 Kairu Joshua Wambugu
@@ -182,17 +183,34 @@ public class WorldBankJSONUtils {
     // creates a query based on a request
     public static class QueryBuilder {
 
+        // to get the dataset on "Agricultural irrigated land (% of total agricultural land)"
+        // with 100 entries per page
+        // containing entries from 1960 to 2016
+        // in JSON form
+
+        // the query looks like: http://api.worldbank.org/countries/KEN/indicators/AG.LND.IRIG.AG.ZS?per_page=100&date=1960:2016&format=json
+
         /** CONSTANTS */
 
         /** Strings */
 
-        private static String BASE_URL = "http://api.worldbank.org/countries/KEN/indicators/"; // the base URL
+        // Strings for building the query
 
-        private static String BASE_ARGUMENTS = "?per_page=100&date=1960:2016&format=json"; // the basic arguments we will use
+        private static String
 
-        // per_page=100 - 100 entries per page
-        // date=1960:2016 - entries from 1960 to 2016
-        // format=json - JSON format
+        BASE_URL = "http://api.worldbank.org/countries/KEN/indicators/", // the base URL
+
+        QUESTION_MARK = "?", // the question mark
+
+        PER_PAGE = "per_page=100", // number of entries per page - 100 per page for now
+
+        AMPERSAND = "&", // the ampersand
+
+        COLON = ":", // the colon used for dates
+
+        FORMAT = "format=json"; // the format of the entries - JSON for now
+
+        // Strings for the indicators
 
         public static String
 
@@ -389,9 +407,13 @@ public class WorldBankJSONUtils {
 
         // begin method getQuery
         // returns the query for the dataset passed in
-        public static String getQuery( String inputDataset ) {
+        // during the time period specified
+        public static String getQuery( String inputDataset, int startYear, int endYear ) {
 
             // to get the dataset on "Agricultural irrigated land (% of total agricultural land)"
+            // with 100 entries per page
+            // containing entries from 1960 to 2016
+            // in JSON form
 
             // the query looks like: http://api.worldbank.org/countries/KEN/indicators/AG.LND.IRIG.AG.ZS?per_page=100&date=1960:2016&format=json
 
@@ -399,6 +421,8 @@ public class WorldBankJSONUtils {
             // 1. get the hashmap of all the registered queries
             // 2. get the ID of the input dataset from the hashmap
             // 3. build the query
+            // 3a. if the start year and the end year are similar use just one (the end year)
+            // 3b. else use both
             // 4. return the query
 
             // 0. initialize the query to return
@@ -413,13 +437,29 @@ public class WorldBankJSONUtils {
 
             // 3. build the query
 
-            queryString = BASE_URL + inputDatasetID + BASE_ARGUMENTS;
+            // the query looks like: http://api.worldbank.org/countries/KEN/indicators/AG.LND.IRIG.AG.ZS?per_page=100&date=1960:2016&format=json
+
+            String yearString = "date=";
+
+            // 3a. if the start year and the end year are similar use just one (the end year)
+
+            if( startYear == endYear ) { yearString += String.valueOf( endYear ); }
+
+            // 3b. else use both
+
+            else { yearString += String.format( Locale.ENGLISH, "%d%s%d", startYear, COLON, endYear ); }
+
+            queryString = BASE_URL + inputDatasetID + QUESTION_MARK + PER_PAGE + yearString + AMPERSAND + FORMAT;
 
             // 4. return the query
 
             return queryString;
 
         } // end method getQuery
+
+        // method getQuery
+        // a getQuery that takes only one year parameter
+        public static String getQuery( String inputDataset, int year ) { return getQuery( inputDataset, year, year ); }
 
         // begin method getDatasetValues
         // returns an array of all the values of the datasets that the query builder has
