@@ -5,7 +5,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -32,6 +34,8 @@ import java.util.Locale;
 public class WorldBankJSONUtils {
 
     /** CONSTANTS */
+
+    public static final int DATASET_START_YEAR = 1960; // the first year that has a dataset at World Bank
 
     /** VARIABLES */
 
@@ -176,6 +180,42 @@ public class WorldBankJSONUtils {
         return returnString;
 
     } // end method getDatasetsJSONString
+
+    // begin method getDatasetYears
+    // returns an array of integers that represent all the years covered in the World Bank datasets
+    // from 1960 to now
+    public static int[] getDatasetYears() {
+
+        // 0. get the current year
+        // 1. get the number of years between now and datasets' start year, including datasets' start year
+        // 2. use this number as the length of the array to return
+        // 3. populate the array with the years from datasets' start year to now
+        // 4. return the array
+
+        // 0. get the current year
+
+        Calendar currentCalendar = Calendar.getInstance();
+
+        int currentYear = currentCalendar.get( Calendar.YEAR );
+
+        // 1. get the number of years between now and datasets' start year, including datasets' start year
+
+        int numberOfYears = ( currentYear - DATASET_START_YEAR ) + 1;
+
+        // 2. use this number as the length of the array to return
+
+        int[] yearsArray = new int[ numberOfYears ];
+
+        // 3. populate the array with the years from datasets' start year to now
+
+        // for to do the population
+        for( int i = 0; i < yearsArray.length; i++ ) { yearsArray[ i ] = DATASET_START_YEAR + i; }
+
+        // 4. return the array
+
+        return yearsArray;
+
+    } // end method getDatasetYears
 
     /** INNER CLASSES */
 
