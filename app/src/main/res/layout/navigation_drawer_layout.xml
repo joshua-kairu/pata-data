@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    
+    Copyright 2016 Kairu Joshua Wambugu
+    
+    Licensed under the Apache License, Version 2.0 (the "License"); 
+    you may not use this file except in compliance with the License. 
+    
+    You may obtain a copy of the License at 
+    http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software 
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+    implied.
+
+    See the License for the specific language governing permissions and 
+    limitations under the License. 
+    
+    -->
+
+<RelativeLayout
+
+    android:id="@+id/ndl_rl_left_drawer"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="320dp"
+
+    android:layout_height="match_parent"
+
+    android:layout_gravity="start"
+
+    android:layout_marginStart="@dimen/navigation_drawer_left_margin"
+
+    android:layout_marginLeft="@dimen/navigation_drawer_left_margin"
+
+    android:layout_marginRight="@dimen/navigation_drawer_right_margin"
+
+    android:layout_marginEnd="@dimen/navigation_drawer_right_margin"
+
+    >
+
+    <!-- TextView to show the Dataset label -->
+
+    <TextView
+
+        android:id="@+id/ndl_tv_dataset"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="@dimen/navigation_drawer_item_height"
+
+        android:text="@string/dataset"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+
+        android:layout_marginTop="@dimen/navigation_drawer_space_between_content_areas"
+
+        android:layout_marginBottom="@dimen/navigation_drawer_space_between_content_areas"
+
+        />
+
+    <!-- Spinner to contain the datasets -->
+
+    <Spinner
+
+        android:id="@+id/ndl_s_datasets"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="@dimen/navigation_drawer_item_height"
+
+        android:layout_marginBottom="@dimen/navigation_drawer_space_between_content_areas"
+
+        android:layout_below="@id/ndl_tv_dataset"
+
+        />
+
+    <!-- A divider -->
+    
+    <View
+
+        android:id="@+id/ndl_v_divider"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="1dp"
+
+        android:background="@android:color/darker_gray"
+
+        android:layout_below="@id/ndl_s_datasets"
+
+        />
+
+    <!-- LinearLayout to hold the years -->
+
+    <LinearLayout
+
+        android:layout_marginTop="@dimen/navigation_drawer_space_between_content_areas"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/ndl_v_divider"
+
+        android:orientation="horizontal"
+
+        android:baselineAligned="false"
+
+        >
+
+        <!-- LinearLayout to hold the start year components -->
+
+        <LinearLayout
+
+            android:layout_width="0dp"
+
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+
+            android:layout_marginRight="@dimen/navigation_drawer_space_between_content_areas"
+
+            android:layout_marginEnd="@dimen/navigation_drawer_space_between_content_areas"
+
+            android:orientation="vertical"
+
+            >
+
+            <!-- TextView to show the start year label -->
+
+            <TextView
+
+                android:text="@string/start_year"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="@dimen/navigation_drawer_item_height"
+
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+
+                />
+
+            <!-- Spinner to select the start year -->
+
+            <Spinner
+
+                android:id="@+id/ndl_s_start_year"
+
+                android:layout_height="@dimen/navigation_drawer_item_height"
+
+                android:layout_width="wrap_content"
+
+                />
+
+        </LinearLayout>
+
+
+        <!-- LinearLayout to hold the end year components -->
+
+        <LinearLayout
+
+            android:layout_width="0dp"
+
+            android:layout_weight="1"
+
+            android:layout_height="match_parent"
+
+            android:orientation="vertical"
+
+            >
+
+            <!-- TextView to show the end year label -->
+
+            <TextView
+
+                android:text="@string/end_year"
+
+                android:layout_height="@dimen/navigation_drawer_item_height"
+
+                android:layout_width="wrap_content"
+
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+
+                />
+
+            <!-- Spinner to select the end year -->
+
+            <Spinner
+
+                android:id="@+id/ndl_s_end_year"
+
+                android:layout_height="@dimen/navigation_drawer_item_height"
+
+                android:layout_width="wrap_content"
+
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
