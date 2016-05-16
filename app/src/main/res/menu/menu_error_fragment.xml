@@ -21,26 +21,42 @@
 
  -->
 
-<RelativeLayout
+<!-- Menu for displaying action buttons in the error fragment -->
+
+<menu
 
     xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="match_parent"
-
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >
 
-    <!-- Main content view -->
+    <!-- Edit, to edit the dataset selected -->
 
-    <FrameLayout
+    <item
 
-        android:id="@+id/m_fl_content"
+        android:id="@+id/action_error_fragment_edit"
 
-        android:layout_width="match_parent"
+        android:icon="@drawable/ic_edit_white_24dp"
 
-        android:layout_height="match_parent"
+        android:title="@string/toolbar_edit"
+
+        app:showAsAction="ifRoom"
 
         />
 
-</RelativeLayout>
+    <!-- Refresh, to reload -->
+
+    <item
+
+        android:id="@+id/action_error_fragment_refresh"
+
+        android:icon="@drawable/ic_refresh_white_24dp"
+
+        android:title="@string/toolbar_refresh"
+
+        app:showAsAction="ifRoom"
+
+        />
+
+</menu>

@@ -1,13 +1,17 @@
 package com.jlt.patadata;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -66,8 +70,8 @@ public class WorldBankJSONUtils {
 
     } // end method getPreamble
 
-    // begin method getDatasets
-    public static ArrayList< Dataset > getDatasets(String inputJSON ) {
+    // begin method getDatasetsFromJSON
+    public static ArrayList< Dataset > getDatasetsFromJSON( String inputJSON ) {
 
         // 0. get the JSON string representing the datasets
         // 1. return a list of datasets from that string
@@ -77,7 +81,7 @@ public class WorldBankJSONUtils {
         Type collectionType = new TypeToken< Collection < Dataset > >(){}.getType();
         return gson.fromJson( getDatasetsJSONString( inputJSON ), collectionType );
 
-    } // end method getDatasets
+    } // end method getDatasetsFromJSON
 
     // begin method getPreambleJSONString
     // gets the string representation of the preamble JSON
@@ -181,10 +185,10 @@ public class WorldBankJSONUtils {
 
     } // end method getDatasetsJSONString
 
-    // begin method getDatasetYears
+    // begin method getDatasetYearsAsString
     // returns an array of integers that represent all the years covered in the World Bank datasets
     // from 1960 to now
-    public static int[] getDatasetYears() {
+    public static int[] getDatasetYearsAsString() {
 
         // 0. get the current year
         // 1. get the number of years between now and datasets' start year, including datasets' start year
@@ -215,13 +219,13 @@ public class WorldBankJSONUtils {
 
         return yearsArray;
 
-    } // end method getDatasetYears
+    } // end method getDatasetYearsAsString
 
     /** INNER CLASSES */
 
-    // begin class QueryBuilder
+    // begin class RequestQueryBuilder
     // creates a query based on a request
-    public static class QueryBuilder {
+    public static class RequestQueryBuilder {
 
         // to get the dataset on "Agricultural irrigated land (% of total agricultural land)"
         // with 100 entries per page
@@ -445,10 +449,10 @@ public class WorldBankJSONUtils {
 
         } // end method getHashMap
 
-        // begin method getQuery
-        // returns the query for the dataset passed in
+        // begin method getRequestQueryURL
+        // returns the query URL for the dataset passed in
         // during the time period specified
-        public static String getQuery( String inputDataset, int startYear, int endYear ) {
+        public static String getRequestQueryURL( String inputDataset, int startYear, int endYear ) {
 
             // to get the dataset on "Agricultural irrigated land (% of total agricultural land)"
             // with 100 entries per page
@@ -489,17 +493,17 @@ public class WorldBankJSONUtils {
 
             else { yearString += String.format( Locale.ENGLISH, "%d%s%d", startYear, COLON, endYear ); }
 
-            queryString = BASE_URL + inputDatasetID + QUESTION_MARK + PER_PAGE + yearString + AMPERSAND + FORMAT;
+            queryString = BASE_URL + inputDatasetID + QUESTION_MARK + PER_PAGE + AMPERSAND + yearString + AMPERSAND + FORMAT;
 
             // 4. return the query
 
             return queryString;
 
-        } // end method getQuery
+        } // end method getRequestQueryURL
 
-        // method getQuery
-        // a getQuery that takes only one year parameter
-        public static String getQuery( String inputDataset, int year ) { return getQuery( inputDataset, year, year ); }
+        // method getRequestQueryURL
+        // a getRequestQueryURL that takes only one year parameter
+        public static String getRequestQueryURL( String inputDataset, int year ) { return getRequestQueryURL( inputDataset, year, year ); }
 
         // begin method getDatasetValues
         // returns an array of all the values of the datasets that the query builder has
@@ -509,28 +513,33 @@ public class WorldBankJSONUtils {
 
             // 0. get the hashmap
             // 1. get all the keys of the hashmap as a Set
-            // 2. convert the Set to an array
-            // 3. return the array as a String array
+            // 2. use the length of the Set to initialize the return array
+            // 3. populate the return array with the Set
+            // 4. ensure alphabetical ordering in the return array
+            // 5. return the return array
 
-            return
-                    // 3. return the array as a String array
+            // 0. get the hashmap
 
-                    ( String[] )
+            // 1. get all the keys of the hashmap as a Set
 
-                    // 0. get the hashmap
+            // 2. use the length of the Set to initialize the return array
 
-                    getHashMap()
+            // 3. populate the return array with the Set
 
-                    // 1. get all the keys of the hashmap as a Set
+            String returnArray[] = new String[ getHashMap().keySet().size() ];
 
-                    .keySet()
+            returnArray = getHashMap().keySet().toArray( returnArray );
 
-                    // 2. convert the Set to an array
+            // 4. ensure alphabetical ordering in the return array
 
-                    .toArray() ;
+            Arrays.sort( returnArray );
+
+            // 5. return the return array
+
+            return returnArray;
 
         } // end method getDatasetValues
 
-    } // end class QueryBuilder
+    } // end class RequestQueryBuilder
 
 } // end class WorldBankJSONUtils

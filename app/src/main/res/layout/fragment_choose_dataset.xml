@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- 
-    
-    Copyright 2016 Kairu Joshua Wambugu
-    
-    Licensed under the Apache License, Version 2.0 (the "License"); 
-    you may not use this file except in compliance with the License. 
-    
-    You may obtain a copy of the License at 
-    http://www.apache.org/licenses/LICENSE-2.0
-    
-    Unless required by applicable law or agreed to in writing, software 
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-    implied.
+<!--
 
-    See the License for the specific language governing permissions and 
-    limitations under the License. 
-    
-    -->
+ Pata Data - Displays World Bank JSON on Kenya
+
+ Copyright (C) 2016 Kairu Joshua Wambugu
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see http://www.gnu.org/licenses/.
+
+ -->
 
 <RelativeLayout
 
-    android:id="@+id/ndl_rl_left_drawer"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="320dp"
+    android:id="@+id/fcd_rl"
+
+    android:layout_width="match_parent"
 
     android:layout_height="match_parent"
 
@@ -46,7 +49,7 @@
 
     <TextView
 
-        android:id="@+id/ndl_tv_dataset"
+        android:id="@+id/fcd_tv_dataset"
 
         android:layout_width="match_parent"
 
@@ -66,7 +69,7 @@
 
     <Spinner
 
-        android:id="@+id/ndl_s_datasets"
+        android:id="@+id/fcd_s_datasets"
 
         android:layout_width="match_parent"
 
@@ -74,7 +77,7 @@
 
         android:layout_marginBottom="@dimen/navigation_drawer_space_between_content_areas"
 
-        android:layout_below="@id/ndl_tv_dataset"
+        android:layout_below="@id/fcd_tv_dataset"
 
         />
 
@@ -82,7 +85,7 @@
     
     <View
 
-        android:id="@+id/ndl_v_divider"
+        android:id="@+id/fcd_v_divider"
 
         android:layout_width="match_parent"
 
@@ -90,7 +93,7 @@
 
         android:background="@android:color/darker_gray"
 
-        android:layout_below="@id/ndl_s_datasets"
+        android:layout_below="@id/fcd_s_datasets"
 
         />
 
@@ -100,11 +103,11 @@
 
         android:layout_marginTop="@dimen/navigation_drawer_space_between_content_areas"
 
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
 
-        android:layout_below="@id/ndl_v_divider"
+        android:layout_below="@id/fcd_v_divider"
 
         android:orientation="horizontal"
 
@@ -148,7 +151,7 @@
 
             <Spinner
 
-                android:id="@+id/ndl_s_start_year"
+                android:id="@+id/fcd_s_start_year"
 
                 android:layout_height="@dimen/navigation_drawer_item_height"
 
@@ -191,7 +194,7 @@
 
             <Spinner
 
-                android:id="@+id/ndl_s_end_year"
+                android:id="@+id/fcd_s_end_year"
 
                 android:layout_height="@dimen/navigation_drawer_item_height"
 
@@ -201,7 +204,45 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
+
+    <!-- A FAB to search for the dataset -->
+
+    <!-- No need for margin end and margin right since they are declared in the parent RelativeLayout -->
+
+    <android.support.design.widget.FloatingActionButton
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:id="@+id/fcd_fab_search"
+
+        android:layout_marginLeft="@dimen/layout_margin_start"
+
+        android:layout_marginStart="@dimen/layout_margin_start"
+
+        android:layout_marginBottom="@dimen/layout_margin_bottom"
+
+        android:layout_alignParentBottom="true"
+
+        android:layout_alignParentRight="true"
+
+        android:layout_alignParentEnd="true"
+
+
+        app:srcCompat="@drawable/ic_search_white_24dp"
+
+        app:elevation="6dp"
+
+        app:fabSize="normal"
+
+        app:pressedTranslationZ="12dp"
+
+        app:borderWidth="0dp"
+
+        app:layout_anchorGravity="bottom|right|end"
+
+        />
 
 </RelativeLayout>
