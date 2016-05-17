@@ -48,6 +48,10 @@ public class ChooseDatasetFragment extends Fragment {
 
     private RequestURLListener requestURLListener; // a listener of the request URL
 
+    /** Selected Dataset Name Listeners */
+
+    private SelectedDatasetNameListener selectedDatasetNameListener; // listener for the selected dataset's name
+
     /** Spinners */
 
     private Spinner
@@ -79,6 +83,7 @@ public class ChooseDatasetFragment extends Fragment {
 
         // 0. super things
         // 1. initialize the request URL
+        // 2. initialize the selected dataset name listener
 
         // 0. super things
 
@@ -94,6 +99,15 @@ public class ChooseDatasetFragment extends Fragment {
 
         catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement RequestURLListener." ); }
 
+        // 2. initialize the selected dataset name listener
+
+        // try to initialize the selected dataset name listener
+
+        try { selectedDatasetNameListener = ( SelectedDatasetNameListener ) getActivity(); }
+
+        // problems of casting
+
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement SelectedDatasetNameListener." ); }
     } // end onAttach
 
     @Override
@@ -268,9 +282,11 @@ public class ChooseDatasetFragment extends Fragment {
         // 1a. toast the user of this
         // 1b. build a query with the end year
         // 1c. start waiting for a result from that query
-        // 1. otherwise the start year is less than the end year
-        // 1a. build a query with both years
-        // 1b. start waiting for a result from that query
+        // 1d. store the selected dataset name with the appropriate listener
+        // 2. otherwise the start year is less than the end year
+        // 2a. build a query with both years
+        // 2b. start waiting for a result from that query
+        // 2c. store the selected dataset name with the appropriate listener
 
         String selectedDataset = datasetsSpinner.getSelectedItem().toString();
         int selectedStartYear = ( Integer ) startYearSpinner.getSelectedItem();
@@ -320,18 +336,22 @@ public class ChooseDatasetFragment extends Fragment {
 
                     .commit();
 
+            // 1d. store the selected dataset name with the appropriate listener
+
+            selectedDatasetNameListener.onSetSelectedDatasetName( selectedDataset );
+
         } // end else if for when the selected start year is the same as the selected end year
 
-        // 1. otherwise the start year is less than the end year
+        // 2. otherwise the start year is less than the end year
 
         // begin else for when the selected start year is less than the selected end year
         else {
 
-            // 1a. build a query with both years
+            // 2a. build a query with both years
 
             String requestURL = WorldBankJSONUtils.RequestQueryBuilder.getRequestQueryURL( selectedDataset, selectedStartYear, selectedEndYear );
 
-            // 1b. start waiting for a result from that query
+            // 2b. start waiting for a result from that query
 
             requestURLListener.onSetRequestURL( requestURL );
 
@@ -346,6 +366,10 @@ public class ChooseDatasetFragment extends Fragment {
                     .replace( R.id.m_fl_content, waitingFragment )
 
                     .commit();
+
+            // 2c. store the selected dataset name with the appropriate listener
+
+            selectedDatasetNameListener.onSetSelectedDatasetName( selectedDataset );
 
         } // end else for when the selected start year is less than the selected end year
 

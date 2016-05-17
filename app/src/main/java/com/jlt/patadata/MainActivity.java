@@ -2,12 +2,8 @@ package com.jlt.patadata;
 
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
-
-import java.util.Arrays;
 
 /**
  *
@@ -32,7 +28,7 @@ import java.util.Arrays;
 
 // begin activity MainActivity
 // is the main activity orchestrating the fragments
-public class MainActivity extends AppCompatActivity implements RequestURLListener {
+public class MainActivity extends AppCompatActivity implements RequestURLListener, SelectedDatasetNameListener {
 
     /** CONSTANTS */
 
@@ -52,7 +48,12 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     /** Strings */
 
-    private String requestURL; // the request URL
+    private String
+
+    requestURL, // the request URL
+
+    selectedDatasetName; // the name of the selected dataset
+
 
     /** Getters and Setters */
 
@@ -165,6 +166,14 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     @Override
     // getRequestURL
     public String getRequestURL() { return requestURL; }
+
+    @Override
+    // getSelectedDatasetName
+    public String getSelectedDatasetName() { return selectedDatasetName; }
+
+    @Override
+    // onSetSelectedDatasetName
+    public void onSetSelectedDatasetName( String datasetName ) { selectedDatasetName = datasetName; }
 
     /**
      * Other Methods

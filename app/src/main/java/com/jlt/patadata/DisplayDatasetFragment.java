@@ -1,11 +1,14 @@
 package com.jlt.patadata;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +44,10 @@ public class DisplayDatasetFragment extends Fragment {
 
     /** VARIABLES */
 
+    /** Selected Dataset Name Listeners */
+
+    private SelectedDatasetNameListener selectedDatasetNameListener; // listener for the selected dataset's name
+
     /** Strings */
 
     private String responseJSONString; // the string having the responded JSON
@@ -62,10 +69,33 @@ public class DisplayDatasetFragment extends Fragment {
      */
 
     @Override
+    // begin onAttach
+    public void onAttach( Context context ) {
+
+        // 0. super things
+        // 1. initialize the selected dataset name listener
+
+        // 0. super things
+
+        super.onAttach( context );
+
+        // 1. initialize the selected dataset name listener
+
+        // try to initialize the selected dataset name listener
+
+        try { selectedDatasetNameListener = ( SelectedDatasetNameListener ) getActivity(); }
+
+        // problems of casting
+
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement SelectedDatasetNameListener." ); }
+
+    } // end onAttach
+    @Override
     // begin onCreateView
     public View onCreateView( final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
 
         // 0. inflate the display datasets layout
+        // 0a. put the selected dataset's name on the bar
         // 1. get the datasets from the response JSON
         // 2. initialize the recycler view
         // 2a. make this the recycler's layout manager
@@ -78,6 +108,11 @@ public class DisplayDatasetFragment extends Fragment {
         // 0. inflate the display datasets layout
 
         View rootView = inflater.inflate( R.layout.fragment_display_datasets, container, false );
+
+        // 0a. put the selected dataset's name on the bar
+
+        String s = selectedDatasetNameListener.getSelectedDatasetName();
+        ( ( AppCompatActivity ) getActivity() ).getSupportActionBar().setTitle( selectedDatasetNameListener.getSelectedDatasetName() );
 
         // 1. get the datasets from the response JSON
 
