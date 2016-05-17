@@ -47,47 +47,47 @@
 
         />
 
-    <!-- FAB to edit the dataset data -->
+    <!--&lt;!&ndash; FAB to edit the dataset data &ndash;&gt;-->
 
-    <android.support.design.widget.FloatingActionButton
+    <!--<android.support.design.widget.FloatingActionButton-->
 
-        android:id="@+id/fdd_fab_edit"
+        <!--android:id="@+id/fdd_fab_edit"-->
 
-        android:layout_width="wrap_content"
+        <!--android:layout_width="wrap_content"-->
 
-        android:layout_height="wrap_content"
+        <!--android:layout_height="wrap_content"-->
 
-        android:layout_marginLeft="@dimen/layout_margin_start"
+        <!--android:layout_marginLeft="@dimen/layout_margin_start"-->
 
-        android:layout_marginStart="@dimen/layout_margin_start"
+        <!--android:layout_marginStart="@dimen/layout_margin_start"-->
 
-        android:layout_marginRight="@dimen/layout_margin_end"
+        <!--android:layout_marginRight="@dimen/layout_margin_end"-->
 
-        android:layout_marginEnd="@dimen/layout_margin_end"
+        <!--android:layout_marginEnd="@dimen/layout_margin_end"-->
 
-        android:layout_marginBottom="@dimen/layout_margin_bottom"
+        <!--android:layout_marginBottom="@dimen/layout_margin_bottom"-->
 
-        android:layout_alignParentBottom="true"
+        <!--android:layout_alignParentBottom="true"-->
 
-        android:layout_alignParentRight="true"
+        <!--android:layout_alignParentRight="true"-->
 
-        android:layout_alignParentEnd="true"
+        <!--android:layout_alignParentEnd="true"-->
 
 
-        app:srcCompat="@drawable/ic_edit_white_24dp"
+        <!--app:srcCompat="@drawable/ic_edit_white_24dp"-->
 
-        app:elevation="6dp"
+        <!--app:elevation="6dp"-->
 
-        app:fabSize="normal"
+        <!--app:fabSize="normal"-->
 
-        app:pressedTranslationZ="12dp"
+        <!--app:pressedTranslationZ="12dp"-->
 
-        app:layout_anchor="@id/fdd_rv_display"
+        <!--app:layout_anchor="@id/fdd_rv_display"-->
 
-        app:borderWidth="0dp"
+        <!--app:borderWidth="0dp"-->
 
-        app:layout_anchorGravity="bottom|right|end"
+        <!--app:layout_anchorGravity="bottom|right|end"-->
 
-        />
+        <!--/>-->
 
 </RelativeLayout>

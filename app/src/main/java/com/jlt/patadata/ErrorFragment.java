@@ -138,6 +138,7 @@ public class ErrorFragment extends Fragment {
 
         // 0. if edit is selected
         // 0a. switch to the choosing dataset fragment
+        // 0b. add the choose dataset fragment to the backstack
         // 1. if refresh is selected
         // 1a. switch to the waiting fragment
         // 2. default
@@ -159,6 +160,10 @@ public class ErrorFragment extends Fragment {
                         .beginTransaction()
 
                         .replace( R.id.m_fl_content, new ChooseDatasetFragment() )
+
+                        // 0b. add the choose dataset fragment to the backstack
+
+                        .addToBackStack( null )
 
                         .commit();
 

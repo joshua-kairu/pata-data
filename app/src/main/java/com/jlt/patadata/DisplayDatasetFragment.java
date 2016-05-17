@@ -72,6 +72,7 @@ public class DisplayDatasetFragment extends Fragment {
         // 2b. use the dataset view holder as the adapter
         // 3. when the fab is clicked
         // 3a. go to choosing a dataset
+        // 3b. add the choose dataset fragment to the backstack
         // 4. return the inflated view
 
         // 0. inflate the display datasets layout
@@ -98,35 +99,39 @@ public class DisplayDatasetFragment extends Fragment {
 
         // 3. when the fab is clicked
 
-        FloatingActionButton floatingActionButton = ( FloatingActionButton ) rootView.findViewById( R.id.fdd_fab_edit );
+//        FloatingActionButton floatingActionButton = ( FloatingActionButton ) rootView.findViewById( R.id.fdd_fab_edit );
 
-        // begin floatingActionButton.setOnClickListener
-        floatingActionButton.setOnClickListener(
-
-                // begin new View.OnClickListener
-                new View.OnClickListener() {
-
-                    @Override
-                    // begin onClick
-                    public void onClick( View v ) {
-
-                        // 3a. go to choosing a dataset
-
-                        FragmentManager fragmentManager = getFragmentManager();
-
-                        fragmentManager
-
-                                .beginTransaction()
-
-                                .replace( R.id.m_fl_content, new ChooseDatasetFragment() )
-
-                                .commit();
-
-                    } // end onClick
-
-                } // end new View.OnClickListener
-
-        ); // end floatingActionButton.setOnClickListener
+//        // begin floatingActionButton.setOnClickListener
+//        floatingActionButton.setOnClickListener(
+//
+//                // begin new View.OnClickListener
+//                new View.OnClickListener() {
+//
+//                    @Override
+//                    // begin onClick
+//                    public void onClick( View v ) {
+//
+//                        // 3a. go to choosing a dataset
+//
+//                        FragmentManager fragmentManager = getFragmentManager();
+//
+//                        fragmentManager
+//
+//                                .beginTransaction()
+//
+//                                .add( R.id.m_fl_content, new ChooseDatasetFragment() )
+//
+//                                // 3b. add the choose dataset fragment to the backstack
+//
+//                                .addToBackStack( null )
+//
+//                                .commit();
+//
+//                    } // end onClick
+//
+//                } // end new View.OnClickListener
+//
+//        ); // end floatingActionButton.setOnClickListener
 
         // 4. return the inflated view
 

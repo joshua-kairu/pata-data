@@ -166,6 +166,8 @@ public class WaitingFragment extends Fragment {
 
                                 .replace( R.id.m_fl_content, displayDatasetFragment )
 
+                                .addToBackStack( MainActivity.FRAGMENT_DISPLAY_DATASET )
+
                                 .commit();
 
                     } // end onResponse

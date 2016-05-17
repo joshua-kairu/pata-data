@@ -21,7 +21,12 @@
 
  -->
 
-<!-- Shows that no dataset has been displayed yet because none has been selected yet -->
+<!--
+
+Shows that no dataset has been displayed yet because none has been selected yet
+Ignored, for now
+
+-->
 
 <RelativeLayout
 

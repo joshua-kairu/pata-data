@@ -38,9 +38,13 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     public static final String
 
-            ARGUMENT_REQUEST_URL = "ARGUMENT_REQUEST_URL", // identifier for the request url argument
+    ARGUMENT_REQUEST_URL = "ARGUMENT_REQUEST_URL", // identifier for the request url argument
 
-            ARGUMENT_RESPONSE_JSON_STRING = "ARGUMENT_RESPONSE_JSON_STRING"; // identifier for the response JSON string argument
+    ARGUMENT_RESPONSE_JSON_STRING = "ARGUMENT_RESPONSE_JSON_STRING", // identifier for the response JSON string argument
+
+    FRAGMENT_CHOOSE_DATASET = "FRAGMENT_CHOOSE_DATASET", // name to identify the choosing dataset fragment in the back stack
+
+    FRAGMENT_DISPLAY_DATASET = "FRAGMENT_DISPLAY_DATASET"; // name to identify the display dataset fragment in the back stack
 
     /** VARIABLES */
 
@@ -60,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
         // 0. super things
         // 1. use the main activity layout
-        // 2. start off the empty fragment
+        // 2. start off the choose dataset fragment
+        // 2a. add the choose dataset fragment to the backstack
 
         // 0. super things
 
@@ -70,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
         setContentView( R.layout.activity_main );
 
-        // 2. start off the empty fragment
+        // 2. start off the choose dataset fragment
 
-        EmptyFragment emptyFragment = new EmptyFragment();
+        ChooseDatasetFragment chooseDatasetFragment = new ChooseDatasetFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -80,11 +85,17 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
                 .beginTransaction()
 
-                .add( R.id.m_fl_content, emptyFragment )
+                .add( R.id.m_fl_content, chooseDatasetFragment )
+
+                // 2a. add the choose dataset fragment to the backstack
+
+                .addToBackStack( FRAGMENT_CHOOSE_DATASET )
 
                 .commit();
 
-        Log.e( getClass().getSimpleName(), "onCreate: finished adding the emptyFragment" );
+        // 3. add the choose dataset fragment to the backstack
+
+
 
     } // end onCreate
 
@@ -104,6 +115,47 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
         return super.onCreateOptionsMenu( menu );
 
     } // end onCreateOptionsMenu
+
+    @Override
+    // begin onBackPressed
+    public void onBackPressed() {
+
+        // 0. if the current fragment is the choose dataset fragment
+        // 0a. finish
+        // 1. if the current fragment is the display dataset fragment (or the error fragment?)
+        // 1a. go back to the choose dataset fragment
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // 0. if the current fragment is the choose dataset fragment
+
+        // if for if the current fragment is the choose dataset fragment
+        if( fragmentManager.getBackStackEntryAt( fragmentManager.getBackStackEntryCount() - 1 ).getName().equals( FRAGMENT_CHOOSE_DATASET ) == true )
+
+        // 0a. finish
+
+        { finish(); }
+
+        // 1. if the current fragment is the display dataset fragment (or the error fragment?)
+
+        // begin else if for when the current fragment is the display dataset fragment
+        else if ( fragmentManager.getBackStackEntryAt( fragmentManager.getBackStackEntryCount() - 1 ).getName().equals( FRAGMENT_DISPLAY_DATASET ) == true ) {
+
+            // 1a. go back to the choose dataset fragment
+
+            fragmentManager
+
+                    .beginTransaction()
+
+                    .replace( R.id.m_fl_content, new ChooseDatasetFragment() )
+
+                    .addToBackStack( MainActivity.FRAGMENT_CHOOSE_DATASET )
+
+                    .commit();
+
+        } // end else if for when the current fragment is the display dataset fragment
+
+    } // end onBackPressed
 
     @Override
     // onSetRequestURL

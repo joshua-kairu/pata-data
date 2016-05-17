@@ -34,6 +34,8 @@ import android.view.ViewGroup;
 // begin fragment EmptyFragment
 // the fragment that appears first time
 // it displays the fact that no dataset has been chosen
+
+// Ignored for now
 public class EmptyFragment extends Fragment {
 
     /** CONSTANTS */
