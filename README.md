@@ -1,4 +1,4 @@
-# pata-data
+# Pata Data
 A way to access World Bank APIs for open datasets. 
 
 ## Introduction
