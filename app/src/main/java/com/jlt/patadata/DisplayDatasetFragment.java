@@ -111,7 +111,6 @@ public class DisplayDatasetFragment extends Fragment {
 
         // 0a. put the selected dataset's name on the bar
 
-        String s = selectedDatasetNameListener.getSelectedDatasetName();
         ( ( AppCompatActivity ) getActivity() ).getSupportActionBar().setTitle( selectedDatasetNameListener.getSelectedDatasetName() );
 
         // 1. get the datasets from the response JSON

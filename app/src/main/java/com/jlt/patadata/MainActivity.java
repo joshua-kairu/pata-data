@@ -1,9 +1,16 @@
 package com.jlt.patadata;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+
+import static android.content.SharedPreferences.*;
 
 /**
  *
@@ -40,20 +47,30 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     FRAGMENT_CHOOSE_DATASET = "FRAGMENT_CHOOSE_DATASET", // name to identify the choosing dataset fragment in the back stack
 
-    FRAGMENT_DISPLAY_DATASET = "FRAGMENT_DISPLAY_DATASET"; // name to identify the display dataset fragment in the back stack
+    FRAGMENT_DISPLAY_DATASET = "FRAGMENT_DISPLAY_DATASET", // name to identify the display dataset fragment in the back stack
+
+    PREFERENCES = "PREFERENCES", // string to identify the preferences
+
+    PREFERENCE_SELECTED_DATASET_NAME = "PREFERENCE_SELECTED_DATASET_NAME", // string to identify the preference for storing the selected dataset's name
+
+    PREFERENCE_REQUEST_URL = "PREFERENCE_REQUEST_URL"; // string to identify the preference for storing the request URL
 
     /** VARIABLES */
 
+    /** Fragments */
+
+    private Fragment currentFragment; // the fragment currently on the screen
+
     /** METHODS */
-
-    /** Strings */
-
-    private String
-
-    requestURL, // the request URL
-
-    selectedDatasetName; // the name of the selected dataset
-
+//
+//    /** Strings */
+//
+//    private String
+//
+//    requestURL, // the request URL
+//
+//    selectedDatasetName; // the name of the selected dataset
+//
 
     /** Getters and Setters */
 
@@ -64,39 +81,59 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     public void onCreate( Bundle savedInstanceState ) {
 
         // 0. super things
+        // 0a. get the shared preferences
         // 1. use the main activity layout
-        // 2. start off the choose dataset fragment
-        // 2a. add the choose dataset fragment to the backstack
+        // 1a. set the bar title to be the name of the app
+        // 2. if the app is running first time (so the saved instance state will be null) (done to avoid blushes with screen rotation)
+        // 2a. start off the choose dataset fragment
+        // 2a1. add the choose dataset fragment to the backstack
+        // 3. if the app is not running first time (so the saved instance state will not be null)
+        // 3a. set the app bar title to be what was stored in the saved instance
 
         // 0. super things
 
         super.onCreate( savedInstanceState );
 
+        // 0a. get the shared preferences
+
         // 1. use the main activity layout
 
         setContentView( R.layout.activity_main );
 
-        // 2. start off the choose dataset fragment
-
-        ChooseDatasetFragment chooseDatasetFragment = new ChooseDatasetFragment();
+        // 2. if the app is running first time (so the saved instance state will be null) (done to avoid blushes with screen rotation)
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        fragmentManager
+        // begin if for if the choosing dataset fragment is null
+        if( savedInstanceState == null ) {
 
-                .beginTransaction()
+            ChooseDatasetFragment chooseDatasetFragment = new ChooseDatasetFragment();
 
-                .add( R.id.m_fl_content, chooseDatasetFragment )
+            fragmentManager
 
-                // 2a. add the choose dataset fragment to the backstack
+                    .beginTransaction()
 
-                .addToBackStack( FRAGMENT_CHOOSE_DATASET )
+                    // 2a. start off the choose dataset fragment
 
-                .commit();
+                    .add( R.id.m_fl_content, chooseDatasetFragment )
 
-        // 3. add the choose dataset fragment to the backstack
+                    // 2a1. add the choose dataset fragment to the backstack
 
+                    .addToBackStack( FRAGMENT_CHOOSE_DATASET )
 
+                    .commit();
+
+        } // end if for if the choosing dataset fragment is null
+
+        // 3. if the app is not running first time (so the saved instance state will not be null)
+
+        // else for when the saved instance state is not null
+
+        // 3a. set the app bar title to be what was stored in the saved instance
+
+//        else {
+//            CharSequence charSequence = savedInstanceState.getString( BUNDLE_CURRENT_APP_BAR_TITLE );
+//            setTitle( charSequence ); }
 
     } // end onCreate
 
@@ -159,21 +196,70 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     } // end onBackPressed
 
     @Override
-    // onSetRequestURL
-    // initialize the request URL
-    public void onSetRequestURL( String requestURL ) { this.requestURL = requestURL; }
+    // begin onSaveInstanceState
+    // used to store the instance state for the cases of configuration changes
+    public void onSaveInstanceState( Bundle outState ) {
+
+        // 0. super things
+        // 1. store app bar title
+
+        // 0. super things
+
+        super.onSaveInstanceState( outState );
+
+        // 1. store app bar title
+
+//        outState.putCharSequence( BUNDLE_CURRENT_APP_BAR_TITLE, getSupportActionBar().getTitle().toString() );
+
+
+    } // end onSaveInstanceState
 
     @Override
-    // getRequestURL
-    public String getRequestURL() { return requestURL; }
+    // begin onSetRequestURL
+    // sets the request URL to the preferences
+    public void onSetRequestURL( String requestURL ) {
+
+        // 0. set the request URL in shared preferences
+
+        // 0. set the request URL in shared preferences
+
+        Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
+
+        editor.putString( PREFERENCE_REQUEST_URL, requestURL );
+
+        editor.apply();
+
+    } // end onSetRequestURL
 
     @Override
-    // getSelectedDatasetName
-    public String getSelectedDatasetName() { return selectedDatasetName; }
+    // begin getRequestURL
+    // gets the request URL from the preferences
+    public String getRequestURL() {
+
+        // 0. get the request URL from the shared preferences
+
+        // 0. get the request URL from the shared preferences
+
+        return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_REQUEST_URL, null );
+
+    } // end getRequestURL
 
     @Override
-    // onSetSelectedDatasetName
-    public void onSetSelectedDatasetName( String datasetName ) { selectedDatasetName = datasetName; }
+    // getSelectedDatasetName from preferences
+    public String getSelectedDatasetName() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_SELECTED_DATASET_NAME, null ); }
+
+    @Override
+    // begin onSetSelectedDatasetName
+    // sets dataset name at preferences
+    public void onSetSelectedDatasetName( String datasetName ) {
+
+        Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
+
+        editor.putString( PREFERENCE_SELECTED_DATASET_NAME, datasetName );
+
+        editor.apply();
+
+    } // end onSetSelectedDatasetName
 
     /**
      * Other Methods

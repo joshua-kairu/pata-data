@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -174,6 +175,7 @@ public class ChooseDatasetFragment extends Fragment {
         // 1d. initialize the search fab
         // 1d1. when the fab is touched
         // 1d1a. validate the spinner choices and act accordingly
+        // 1e. set the bar title to be the name of the app
 
         // 1a. initialize the datasets spinner
 
@@ -268,6 +270,10 @@ public class ChooseDatasetFragment extends Fragment {
                 } // end new View.OnClickListener
 
         ); // end searchFloatingActionButton.setOnClickListener
+
+        // 1e. set the bar title to be the name of the app
+
+        ( ( AppCompatActivity ) ( getActivity() ) ).getSupportActionBar().setTitle( R.string.app_name );
 
     } // end method initializeUI
 

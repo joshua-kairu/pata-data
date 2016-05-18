@@ -158,7 +158,7 @@ public class WaitingFragment extends Fragment {
 
                         // 1a1b. start the fragment for displaying datasets
 
-                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
                         fragmentManager
 
