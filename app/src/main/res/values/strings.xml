@@ -30,5 +30,7 @@
 
     <string name="toolbar_edit">Edit</string>
     <string name="toolbar_refresh">Refresh</string>
+    <string name="toolbar_chart">Chart</string>
+    <string name="toolbar_table">Table</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package com.jlt.patadata;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -49,6 +48,10 @@ public class WaitingFragment extends Fragment {
 
     private RequestURLListener requestURLListener; // a listener of the request URL
 
+    /** Response JSON Listeners */
+
+    private ResponseJSONListener responseJSONListener; // listener for the response JSON
+
     /**
      * CONSTRUCTOR
      */
@@ -66,21 +69,33 @@ public class WaitingFragment extends Fragment {
     public void onAttach( Context context ) {
 
         // 0. super things
-        // 1. initialize the request URL
+        // 1. initialize the request URL listener
+        // 2. initialize the response JSON listener
 
         // 0. super things
 
         super.onAttach( context );
 
-        // 1. initialize the request URL
+        // 1. initialize the request URL listener
 
-        // try to initialize the request URL
+        // try to initialize the request URL listener
 
         try { requestURLListener = ( RequestURLListener ) getActivity(); }
 
         // problems of casting
 
         catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement RequestURLListener." ); }
+
+        // 2. initialize the response JSON listener
+
+        // try to initialize the response JSON listener
+
+        try { responseJSONListener = ( ResponseJSONListener ) getActivity(); }
+
+        // problems of casting
+
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement ResponseJSONListener." ); }
+
 
     } // end onAttach
 
@@ -113,8 +128,8 @@ public class WaitingFragment extends Fragment {
         // 1. use the Volley singleton to attempt to get the JSON from World Bank
         // 1a. create a JSON array request based on the URL
         // 1a1.if the request is successful
-        // 1a1a. pass the JSON response as a string to the fragment for displaying datasets
-        // 1a1b. start the fragment for displaying datasets
+        // 1a1a. store the response string for use across fragments
+        // 1a1b. start the fragment for displaying datasets in chart form
         // 1b2. if the request has failed
         // 1b2a. start the fragment for showing an error
         // 1c. add the request to the request queue
@@ -144,19 +159,13 @@ public class WaitingFragment extends Fragment {
                     public void onResponse( JSONArray response ) {
 
                         // 1a1.if the request is successful
-                        // 1a1a. pass the JSON response as a string to the fragment for displaying datasets
+                        // 1a1a. store the response string for use across fragments
 
-                        DisplayDatasetFragment displayDatasetFragment = new DisplayDatasetFragment();
-
-                        Bundle bundle = new Bundle();
-
-                        bundle.putString( MainActivity.ARGUMENT_RESPONSE_JSON_STRING, response.toString() );
+                        responseJSONListener.onSetResponseJSON( response.toString() );
 
                         Log.e( "onResponse: ", response.toString() );
 
-                        displayDatasetFragment.setArguments( bundle );
-
-                        // 1a1b. start the fragment for displaying datasets
+                        // 1a1b. start the fragment for displaying datasets in chart form
 
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -164,9 +173,9 @@ public class WaitingFragment extends Fragment {
 
                                 .beginTransaction()
 
-                                .replace( R.id.m_fl_content, displayDatasetFragment )
+                                .replace( R.id.m_fl_content, new ChartDisplayDatasetFragment() )
 
-                                .addToBackStack( MainActivity.FRAGMENT_DISPLAY_DATASET )
+                                .addToBackStack( MainActivity.FRAGMENT_CHART_DISPLAY_DATASET )
 
                                 .commit();
 

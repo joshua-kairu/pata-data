@@ -1,9 +1,6 @@
 package com.jlt.patadata;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -35,7 +32,7 @@ import static android.content.SharedPreferences.*;
 
 // begin activity MainActivity
 // is the main activity orchestrating the fragments
-public class MainActivity extends AppCompatActivity implements RequestURLListener, SelectedDatasetNameListener {
+public class MainActivity extends AppCompatActivity implements RequestURLListener, SelectedDatasetListener, ResponseJSONListener {
 
     /** CONSTANTS */
 
@@ -47,13 +44,21 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     FRAGMENT_CHOOSE_DATASET = "FRAGMENT_CHOOSE_DATASET", // name to identify the choosing dataset fragment in the back stack
 
-    FRAGMENT_DISPLAY_DATASET = "FRAGMENT_DISPLAY_DATASET", // name to identify the display dataset fragment in the back stack
+    FRAGMENT_TABLE_DISPLAY_DATASET = "FRAGMENT_TABLE_DISPLAY_DATASET", // name to identify the table display dataset fragment in the back stack
+
+    FRAGMENT_CHART_DISPLAY_DATASET = "FRAGMENT_CHART_DISPLAY_DATASET", // name to identify the chart display dataset fragment in the back stack
 
     PREFERENCES = "PREFERENCES", // string to identify the preferences
 
     PREFERENCE_SELECTED_DATASET_NAME = "PREFERENCE_SELECTED_DATASET_NAME", // string to identify the preference for storing the selected dataset's name
 
-    PREFERENCE_REQUEST_URL = "PREFERENCE_REQUEST_URL"; // string to identify the preference for storing the request URL
+    PREFERENCE_SELECTED_DATASET_START_YEAR = "PREFERENCE_SELECTED_DATASET_START_YEAR", // string to identify the preference for storing the selected dataset's start year
+
+    PREFERENCE_SELECTED_DATASET_END_YEAR = "PREFERENCE_SELECTED_DATASET_END_YEAR", // string to identify the preference for storing the selected dataset's end year
+
+    PREFERENCE_REQUEST_URL = "PREFERENCE_REQUEST_URL", // string to identify the preference for storing the request URL
+
+    PREFERENCE_RESPONSE_JSON = "PREFERENCE_RESPONSE_JSON"; // string to identify the preference for storing the response JSON
 
     /** VARIABLES */
 
@@ -160,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
         // 0. if the current fragment is the choose dataset fragment
         // 0a. finish
-        // 1. if the current fragment is the display dataset fragment (or the error fragment?)
+        // 1. if the current fragment is the chart display dataset fragment (or the error fragment?)
         // 1a. go back to the choose dataset fragment
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -176,8 +181,8 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
         // 1. if the current fragment is the display dataset fragment (or the error fragment?)
 
-        // begin else if for when the current fragment is the display dataset fragment
-        else if ( fragmentManager.getBackStackEntryAt( fragmentManager.getBackStackEntryCount() - 1 ).getName().equals( FRAGMENT_DISPLAY_DATASET ) == true ) {
+        // begin else if for when the current fragment is the chart display dataset fragment
+        else if ( fragmentManager.getBackStackEntryAt( fragmentManager.getBackStackEntryCount() - 1 ).getName().equals( FRAGMENT_CHART_DISPLAY_DATASET ) == true ) {
 
             // 1a. go back to the choose dataset fragment
 
@@ -260,6 +265,54 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
         editor.apply();
 
     } // end onSetSelectedDatasetName
+
+    @Override
+    // getSelectedDatasetStartYear from preferences
+    public int getSelectedDatasetStartYear() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getInt( PREFERENCE_SELECTED_DATASET_START_YEAR, -1 ); }
+
+    @Override
+    // begin onSetSelectedDatasetStartYear
+    public void onSetSelectedDatasetStartYear( int datasetStartYear ) {
+
+        Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
+
+        editor.putInt( PREFERENCE_SELECTED_DATASET_START_YEAR, datasetStartYear );
+
+        editor.apply();
+
+    } // end onSetSelectedDatasetStartYear
+
+    @Override
+    // getSelectedDatasetEndYear
+    public int getSelectedDatasetEndYear() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getInt( PREFERENCE_SELECTED_DATASET_END_YEAR, -1 ); }
+
+    @Override
+    // begin onSetSelectedDatasetEndYear
+    public void onSetSelectedDatasetEndYear( int datasetEndYear ) {
+
+        Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
+
+        editor.putInt( PREFERENCE_SELECTED_DATASET_END_YEAR, datasetEndYear );
+
+        editor.apply();
+
+    } // end onSetSelectedDatasetEndYear
+
+    @Override
+    // onSetResponseJSON in preferences
+    // begin onSetResponseJSON
+    public void onSetResponseJSON( String responseJSON ) {
+
+        Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
+
+        editor.putString( PREFERENCE_RESPONSE_JSON, responseJSON );
+
+        editor.apply();
+
+    } // end onSetResponseJSON
+
+    @Override
+    public String getResponseJSON() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_RESPONSE_JSON, null ); }
 
     /**
      * Other Methods

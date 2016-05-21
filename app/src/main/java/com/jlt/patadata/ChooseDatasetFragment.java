@@ -51,7 +51,7 @@ public class ChooseDatasetFragment extends Fragment {
 
     /** Selected Dataset Name Listeners */
 
-    private SelectedDatasetNameListener selectedDatasetNameListener; // listener for the selected dataset's name
+    private SelectedDatasetListener selectedDatasetNameListener; // listener for the selected dataset's name
 
     /** Spinners */
 
@@ -104,11 +104,11 @@ public class ChooseDatasetFragment extends Fragment {
 
         // try to initialize the selected dataset name listener
 
-        try { selectedDatasetNameListener = ( SelectedDatasetNameListener ) getActivity(); }
+        try { selectedDatasetNameListener = ( SelectedDatasetListener ) getActivity(); }
 
         // problems of casting
 
-        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement SelectedDatasetNameListener." ); }
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement SelectedDatasetListener." ); }
     } // end onAttach
 
     @Override

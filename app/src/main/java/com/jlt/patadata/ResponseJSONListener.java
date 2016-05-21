@@ -21,20 +21,18 @@ package com.jlt.patadata;
  *
  */
 
-
-// begin interface RequestURLListener
-// takes care of a request for a World Bank URL and its response
-public interface RequestURLListener {
+// begin interface ResponseJSONListener
+// takes care of the response from the World Bank API in JSON form and its response
+public interface ResponseJSONListener {
 
     /** METHODS */
 
     // onSetResponseJSON
-    // sets the request URL
-    public void onSetRequestURL( String requestURL );
+    // sets the response JSON
+    public void onSetResponseJSON( String responseJSON );
 
-    // getRequestURL
-    // gets the request URL
-    public String getRequestURL();
+    // getResponseJSON
+    // gets the response JSON
+    public String getResponseJSON();
 
-
-} // end interface RequestURLListener
+} // end interface ResponseJSONListener

@@ -1,15 +1,18 @@
 package com.jlt.patadata;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,31 +36,31 @@ import java.util.ArrayList;
  * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
+ *
  */
 
-
-// begin fragment DisplayDatasetFragment
-// displays the dataset
-public class DisplayDatasetFragment extends Fragment {
+// begin fragment TableDisplayDatasetFragment
+// displays the dataset in table form
+public class TableDisplayDatasetFragment extends Fragment {
 
     /** CONSTANTS */
 
     /** VARIABLES */
 
+    /** Response JSON Listeners */
+
+    private ResponseJSONListener responseJSONListener; // listener for the response JSON
+
     /** Selected Dataset Name Listeners */
 
-    private SelectedDatasetNameListener selectedDatasetNameListener; // listener for the selected dataset's name
-
-    /** Strings */
-
-    private String responseJSONString; // the string having the responded JSON
+    private SelectedDatasetListener selectedDatasetNameListener; // listener for the selected dataset's name
 
     /**
      * CONSTRUCTOR
      */
 
     // empty constructor for fragment subclasses
-    public DisplayDatasetFragment() {
+    public TableDisplayDatasetFragment() {
     }
 
     /** METHODS */
@@ -69,11 +72,29 @@ public class DisplayDatasetFragment extends Fragment {
      */
 
     @Override
+    // begin onCreate
+    public void onCreate( @Nullable Bundle savedInstanceState ) {
+
+        // 0. super things
+        // 1. register the context menu
+
+        // 0. super things
+
+        super.onCreate( savedInstanceState );
+
+        // 1. register the context menu
+
+        setHasOptionsMenu( true );
+
+    } // end onCreate
+
+    @Override
     // begin onAttach
     public void onAttach( Context context ) {
 
         // 0. super things
         // 1. initialize the selected dataset name listener
+        // 2. initialize the response JSON listener
 
         // 0. super things
 
@@ -83,13 +104,24 @@ public class DisplayDatasetFragment extends Fragment {
 
         // try to initialize the selected dataset name listener
 
-        try { selectedDatasetNameListener = ( SelectedDatasetNameListener ) getActivity(); }
+        try { selectedDatasetNameListener = ( SelectedDatasetListener ) getActivity(); }
 
         // problems of casting
 
-        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement SelectedDatasetNameListener." ); }
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement SelectedDatasetListener." ); }
+
+        // 2. initialize the response JSON listener
+
+        // try to initialize the response JSON listener
+
+        try { responseJSONListener = ( ResponseJSONListener ) getActivity(); }
+
+        // problems of casting
+
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement ResponseJSONListener." ); }
 
     } // end onAttach
+
     @Override
     // begin onCreateView
     public View onCreateView( final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
@@ -107,7 +139,7 @@ public class DisplayDatasetFragment extends Fragment {
 
         // 0. inflate the display datasets layout
 
-        View rootView = inflater.inflate( R.layout.fragment_display_datasets, container, false );
+        View rootView = inflater.inflate( R.layout.fragment_table_display_datasets, container, false );
 
         // 0a. put the selected dataset's name on the bar
 
@@ -115,7 +147,7 @@ public class DisplayDatasetFragment extends Fragment {
 
         // 1. get the datasets from the response JSON
 
-        ArrayList< Dataset > datasets = WorldBankJSONUtils.getDatasetsFromJSON( getArguments().getString( MainActivity.ARGUMENT_RESPONSE_JSON_STRING ) );
+        ArrayList< Dataset > datasets = WorldBankJSONUtils.getDatasetsFromJSON( responseJSONListener.getResponseJSON() );
 
         // 2. initialize the recycler view
 
@@ -173,12 +205,67 @@ public class DisplayDatasetFragment extends Fragment {
 
     } // end onCreateView
 
-    // getter for the responseJSONString
-    public String getResponseJSONString() { return responseJSONString; }
+    @Override
+    // begin onCreateOptionsMenu
+    public void onCreateOptionsMenu( Menu menu, MenuInflater inflater ) {
 
-    // setter for the responseJSONString
-    public void setResponseJSONString( String responseJSONString ) { this.responseJSONString = responseJSONString; }
+        // 0. inflate menu for showing the chart selection option
+        // 1. super things
+
+        // 0. inflate menu for showing the chart selection option
+
+        inflater.inflate( R.menu.menu_table_dataset_display_fragment, menu );
+
+        // 1. super things
+
+        super.onCreateOptionsMenu( menu, inflater );
+
+    } // end onCreateOptionsMenu
+
+    @Override
+    // begin onOptionsItemSelected
+    public boolean onOptionsItemSelected( MenuItem item ) {
+
+        // 0. if the chart option is selected,
+        // 0a. switch to the chart fragment
+        // 0b. add the chart fragment to the backstack
+        // 1. else
+        // 1a. super things
+
+        // 0. if the chart option is selected,
+
+        // begin if for if the selected item is the chart one
+        if ( item.getItemId() == R.id.action_table_dataset_display_fragment_chart ) {
+
+            // 0a. switch to the chart fragment
+
+            FragmentManager fragmentManager = getFragmentManager();
+
+            fragmentManager
+
+                    .beginTransaction()
+
+                    .replace( R.id.m_fl_content, new ChartDisplayDatasetFragment() )
+
+                    // 0b. add the chart fragment to the backstack
+
+                    .addToBackStack( MainActivity.FRAGMENT_CHART_DISPLAY_DATASET )
+
+                    .commit();
+
+            return true;
+
+        } // end if for if the selected item is the chart one
+
+        // 1. else
+
+        // 1a. super things
+
+        // else for otherwise
+        else { return super.onOptionsItemSelected( item ); }
+
+    } // end onOptionsItemSelected
 
     /** Other Methods */
 
-} // end fragment DisplayDatasetFragment
+} // end fragment TableDisplayDatasetFragment

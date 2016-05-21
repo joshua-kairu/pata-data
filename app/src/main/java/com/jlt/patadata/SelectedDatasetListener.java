@@ -20,9 +20,9 @@ package com.jlt.patadata;
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-// begin interface SelectedDatasetNameListener
-// used for when the dataset has been selected and we need to store the dataset's name
-public interface SelectedDatasetNameListener {
+// begin interface SelectedDatasetListener
+// used for when the dataset has been selected and we need to store the dataset's particulars
+public interface SelectedDatasetListener {
 
     /** CONSTANTS */
 
@@ -44,4 +44,20 @@ public interface SelectedDatasetNameListener {
 
     public void onSetSelectedDatasetName( String datasetName );
 
-} // end interface SelectedDatasetNameListener
+    // getter for the selected dataset's start year
+
+    public int getSelectedDatasetStartYear();
+
+    // setter for the selected dataset's start year
+
+    public void onSetSelectedDatasetStartYear( int datasetStartYear );
+
+    // getter for the selected dataset's end year
+
+    public int getSelectedDatasetEndYear();
+
+    // setter for the dataset's end year
+
+    public void onSetSelectedDatasetEndYear( int datasetEndYear );
+
+} // end interface SelectedDatasetListener

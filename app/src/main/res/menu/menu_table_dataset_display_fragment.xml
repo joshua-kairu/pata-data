@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+ Pata Data - Displays World Bank JSON on Kenya
+
+ Copyright (C) 2016 Kairu Joshua Wambugu
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see http://www.gnu.org/licenses/.
+
+ -->
+
+<!-- Menu for when one has the table and wants to see the chart -->
+
+<menu
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+
+    <!-- Option to show the chart -->
+
+    <item
+
+        android:id="@+id/action_table_dataset_display_fragment_chart"
+
+        android:title="@string/toolbar_chart"
+
+        android:icon="@drawable/ic_timeline_white_24dp"
+
+        app:showAsAction="ifRoom"
+
+        />
+
+</menu>
