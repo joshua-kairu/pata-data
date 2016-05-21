@@ -70,7 +70,7 @@ Ignored, for now
 
             android:contentDescription="@string/no_datasets"
 
-            android:id="@+id/fem_iv_no_datasets"
+            android:id="@+id/fem_iv_loading"
 
             />
 

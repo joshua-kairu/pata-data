@@ -21,20 +21,15 @@
 
  -->
 
-<animated-vector
+<resources>
 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    <!-- Animation Times -->
 
-    android:drawable="@drawable/ic_progress_black_240dp"
+    <!-- Loading -->
 
-    >
+    <integer name="animation_time_loading">1000</integer>
 
-    <target
+    <integer name="animation_time_card_flip_time_full">500</integer>
+    <integer name="animation_time_card_flip_time_half">250</integer>
 
-        android:animation="@anim/animation_set_rotate_sync_arrows"
-
-        android:name="@string/progress_indicator_group"
-
-        />
-
-</animated-vector>
+</resources>

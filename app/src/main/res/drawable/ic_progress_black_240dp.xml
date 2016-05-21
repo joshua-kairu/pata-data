@@ -1,11 +1,11 @@
 <vector
-    android:height="240dp"
+    android:height="240.0dp"
 
     android:viewportHeight="24.0"
 
     android:viewportWidth="24.0"
 
-    android:width="240dp"
+    android:width="240.0dp"
 
     xmlns:android="http://schemas.android.com/apk/res/android"
 
@@ -13,13 +13,21 @@
 
     <!-- group the sync arrows so that we can animate them later -->
 
+    <!-- pivot depends on the view port width and height -->
+
     <group
 
-        android:name="sync_arrows"
+        android:name="@string/progress_indicator_group"
+
+        android:pivotX="12"
+
+        android:pivotY="12"
 
         >
 
         <path
+
+            android:name="progress_indicator"
 
             android:fillColor="#FF000000"
 

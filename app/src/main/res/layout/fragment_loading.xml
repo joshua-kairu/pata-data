@@ -65,7 +65,7 @@
 
             android:contentDescription="@string/loading"
 
-            android:id="@+id/fem_iv_no_datasets"
+            android:id="@+id/fem_iv_loading"
 
             />
 

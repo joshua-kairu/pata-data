@@ -41,8 +41,8 @@ import java.util.ArrayList;
  * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/.
+ *
  */
-
 
 // begin fragment ChartDisplayDatasetFragment
 // displays the dataset in chart form
@@ -182,6 +182,7 @@ public class ChartDisplayDatasetFragment extends Fragment {
         // 2i. put the X axis on the bottom
         // 2j. draw only the left Y axis
         // 2k. Y Axis starts at 0
+        // 2l. set a marker to use every time a value is highlighted
         // 3. return the inflated view
 
         // 0. inflate the chart display datasets layout
@@ -214,7 +215,7 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
         ArrayList< String > lineChartLabels = new ArrayList<>();
 
-        // use an enhanced for to do this
+        // use a for to do this
 
         for ( Dataset worldBankDataset : datasets ) { lineChartLabels.add( String.valueOf( worldBankDataset.getYear() ) ); }
 
@@ -275,6 +276,12 @@ public class ChartDisplayDatasetFragment extends Fragment {
         // 2k. Y Axis starts at 0
 
         lineChart.getAxisLeft().setAxisMinValue( 0f );
+
+        // 2l. set a marker to use every time a value is highlighted
+
+        CustomMarkerView customMarkerView = new CustomMarkerView( getActivity(), R.layout.custom_marker );
+
+        lineChart.setMarkerView( customMarkerView );
 
         // 3. return the inflated view
 

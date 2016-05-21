@@ -33,4 +33,8 @@
     <string name="toolbar_chart">Chart</string>
     <string name="toolbar_table">Table</string>
 
+    <!-- Strings for the progress svg -->
+
+    <string name="progress_indicator_group">Progress indicator group</string>
+
 </resources>

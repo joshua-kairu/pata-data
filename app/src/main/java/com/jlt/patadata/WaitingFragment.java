@@ -1,6 +1,9 @@
 package com.jlt.patadata;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -8,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -110,13 +114,35 @@ public class WaitingFragment extends Fragment {
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
 
         // 0. inflate the layout with the waiting layout
-        // 1. return inflated layout
+        // 1. start animating the loading icon
+        // 2. return inflated layout
 
         // 0. inflate the layout with the waiting layout
 
-        // 1. return inflated layout
+        View rootView = inflater.inflate( R.layout.fragment_loading, container, false );
 
-        return inflater.inflate( R.layout.fragment_loading, container, false );
+        // 1. start animating the loading icon
+
+        ImageView loadingImageView = ( ImageView ) rootView.findViewById( R.id.fem_iv_loading );
+
+        Drawable drawable = loadingImageView.getDrawable();
+
+        Log.e( "onCreateView: ", String.valueOf( drawable instanceof Animatable ) );
+
+        if ( drawable instanceof Animatable ) { ( ( Animatable ) drawable ).start(); }
+
+//        AnimatedVectorDrawableCompat animatedVectorDrawableCompat = AnimatedVectorDrawableCompat.create( getActivity(), R.drawable.animated_sync_arrows );
+//
+//        ImageView loadingImageView = ( ImageView ) rootView.findViewById( R.id.fem_iv_loading );
+//
+//        loadingImageView.setImageDrawable( animatedVectorDrawableCompat );
+//
+//        Log.e( "onCreateView: ", String.valueOf( animatedVectorDrawableCompat == null ) );
+//        animatedVectorDrawableCompat.start();
+
+        // 2. return inflated layout
+
+        return rootView;
 
     } // end onCreateView
 
@@ -199,6 +225,13 @@ public class WaitingFragment extends Fragment {
                         fragmentManager
 
                                 .beginTransaction()
+
+                                // set custom animation for
+                                // when the fragment enters from the right or entered after the back button pops, leading to an enter
+                                // when the fragment leaves from the left or left after the back button pops leading to an exit
+                                .setCustomAnimations(
+                                        R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+                                        R.anim.card_flip_left_in, R.anim.card_flip_left_out )
 
                                 .replace( R.id.m_fl_content, new ErrorFragment() )
 

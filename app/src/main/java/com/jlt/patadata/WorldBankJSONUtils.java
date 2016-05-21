@@ -39,7 +39,17 @@ public class WorldBankJSONUtils {
 
     /** CONSTANTS */
 
+    /** Integers */
+
     public static final int DATASET_START_YEAR = 1960; // the first year that has a dataset at World Bank
+
+    /** Strings */
+
+    public static final String
+
+    SORT_ASCENDING = "SORT_ASCENDING", // sort datasets in ascending order
+
+    SORT_DESCENDING = "SORT_DESCENDING"; // sort datasets in descending order
 
     /** VARIABLES */
 
@@ -220,6 +230,15 @@ public class WorldBankJSONUtils {
         return yearsArray;
 
     } // end method getDatasetYearsAsString
+
+    // begin method sortDatasets
+    // sorts datasets using some defined ways
+//    private static ArrayList< Dataset > sortDatasets ( ArrayList< Dataset > inputDatasets, int sortMethod ) {
+//
+//        Arrays.sort(  );
+//
+//
+//    }
 
     /** INNER CLASSES */
 
