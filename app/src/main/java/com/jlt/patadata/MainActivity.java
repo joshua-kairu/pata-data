@@ -32,21 +32,21 @@ import static android.content.SharedPreferences.*;
 
 // begin activity MainActivity
 // is the main activity orchestrating the fragments
-public class MainActivity extends AppCompatActivity implements RequestURLListener, SelectedDatasetListener, ResponseJSONListener {
+public class MainActivity extends AppCompatActivity implements RequestURLListener, SelectedDatasetListener, ResponseJSONListener, LineChartAnimationListener , PreferencesInterface {
 
     /** CONSTANTS */
 
     public static final String
 
-    ARGUMENT_REQUEST_URL = "ARGUMENT_REQUEST_URL", // identifier for the request url argument
-
-    ARGUMENT_RESPONSE_JSON_STRING = "ARGUMENT_RESPONSE_JSON_STRING", // identifier for the response JSON string argument
+    /** Fragment Constants */
 
     FRAGMENT_CHOOSE_DATASET = "FRAGMENT_CHOOSE_DATASET", // name to identify the choosing dataset fragment in the back stack
 
     FRAGMENT_TABLE_DISPLAY_DATASET = "FRAGMENT_TABLE_DISPLAY_DATASET", // name to identify the table display dataset fragment in the back stack
 
     FRAGMENT_CHART_DISPLAY_DATASET = "FRAGMENT_CHART_DISPLAY_DATASET", // name to identify the chart display dataset fragment in the back stack
+
+    /** Preference Constants */
 
     PREFERENCES = "PREFERENCES", // string to identify the preferences
 
@@ -58,7 +58,15 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     PREFERENCE_REQUEST_URL = "PREFERENCE_REQUEST_URL", // string to identify the preference for storing the request URL
 
-    PREFERENCE_RESPONSE_JSON = "PREFERENCE_RESPONSE_JSON"; // string to identify the preference for storing the response JSON
+    PREFERENCE_RESPONSE_JSON = "PREFERENCE_RESPONSE_JSON", // string to identify the preference for storing the response JSON
+
+    PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY = "PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY", // string to identify the preference for storing the how many times the line chart should be animated
+
+    PREFERENCE_LINE_CHART_ANIMATE_ONCE = "PREFERENCE_LINE_CHART_ANIMATE_ONCE", // string to specify the line chart should be animated only once
+
+    PREFERENCE_LINE_CHART_ANIMATE_ALWAYS = "PREFERENCE_LINE_CHART_ANIMATE_ALWAYS", // string to specify the line chart should be animated always
+
+    PREFERENCE_LINE_CHART_ANIMATED_ONCE = "PREFERENCE_LINE_CHART_ANIMATED_ONCE"; // string to specify whether the line chart has been animated once
 
     /** VARIABLES */
 
@@ -86,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     public void onCreate( Bundle savedInstanceState ) {
 
         // 0. super things
-        // 0a. get the shared preferences
+        // 0a. make sure the chart is animated once
         // 1. use the main activity layout
         // 1a. set the bar title to be the name of the app
         // 2. if the app is running first time (so the saved instance state will be null) (done to avoid blushes with screen rotation)
@@ -99,7 +107,22 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
         super.onCreate( savedInstanceState );
 
-        // 0a. get the shared preferences
+        // 0a. make sure the chart is animated once
+
+        // begin if for if the line chart preference is not to animate once
+        // this can be if the preference has not been set yet or has been set a a different value
+        if (
+                getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY, null ) == null
+                ||
+                getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY, null ).equals( PREFERENCE_LINE_CHART_ANIMATE_ONCE ) == false ) {
+
+            Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
+
+            editor.putString( PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY, PREFERENCE_LINE_CHART_ANIMATE_ONCE );
+
+            editor.apply();
+
+        } // end if for if the line chart preference is not to animate once
 
         // 1. use the main activity layout
 
@@ -167,13 +190,15 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
         // 0a. finish
         // 1. if the current fragment is the chart display dataset fragment (or the error fragment?)
         // 1a. go back to the choose dataset fragment
+        // 2. else if the current fragment is the table display dataset fragment
+        // 2a. go back to the chart display dataset fragment
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         // 0. if the current fragment is the choose dataset fragment
 
         // if for if the current fragment is the choose dataset fragment
-        if( fragmentManager.getBackStackEntryAt( fragmentManager.getBackStackEntryCount() - 1 ).getName().equals( FRAGMENT_CHOOSE_DATASET ) == true )
+        if( getCurrentFragmentName( fragmentManager ).equals( FRAGMENT_CHOOSE_DATASET ) == true )
 
         // 0a. finish
 
@@ -182,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
         // 1. if the current fragment is the display dataset fragment (or the error fragment?)
 
         // begin else if for when the current fragment is the chart display dataset fragment
-        else if ( fragmentManager.getBackStackEntryAt( fragmentManager.getBackStackEntryCount() - 1 ).getName().equals( FRAGMENT_CHART_DISPLAY_DATASET ) == true ) {
+        else if ( getCurrentFragmentName( fragmentManager ).equals( FRAGMENT_CHART_DISPLAY_DATASET ) == true ) {
 
             // 1a. go back to the choose dataset fragment
 
@@ -197,6 +222,25 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
                     .commit();
 
         } // end else if for when the current fragment is the display dataset fragment
+
+        // 2. else if the current fragment is the table display dataset fragment
+
+        // begin else if for when the current fragment is the table display dataset fragment
+        else if ( getCurrentFragmentName( fragmentManager ).equals( FRAGMENT_TABLE_DISPLAY_DATASET ) == true ) {
+
+            // 2a. go back to the chart display dataset fragment
+
+            fragmentManager
+
+                    .beginTransaction()
+
+                    .replace( R.id.m_fl_content, new ChartDisplayDatasetFragment() )
+
+                    .addToBackStack( MainActivity.FRAGMENT_CHART_DISPLAY_DATASET )
+
+                    .commit();
+
+        } // end else if for when the current fragment is the table display dataset fragment
 
     } // end onBackPressed
 
@@ -218,6 +262,23 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
 
     } // end onSaveInstanceState
+
+    @Override
+    // begin onDestroy
+    protected void onDestroy() {
+
+        // 0. super things
+        // 1. make sure the chart is not animated (for cases like when the user exits the app in chart display mode)
+
+        // 0. super things
+
+        super.onDestroy();
+
+        // 1. make sure the chart is not animated (for cases like when the user exits the app in chart display mode)
+
+        onSetChartAnimated( false );
+
+    } // end onDestroy
 
     @Override
     // begin onSetRequestURL
@@ -299,8 +360,8 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     } // end onSetSelectedDatasetEndYear
 
     @Override
-    // onSetResponseJSON in preferences
     // begin onSetResponseJSON
+    // onSetResponseJSON in preferences
     public void onSetResponseJSON( String responseJSON ) {
 
         Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
@@ -312,16 +373,37 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     } // end onSetResponseJSON
 
     @Override
+    // getResponseJSON
     public String getResponseJSON() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_RESPONSE_JSON, null ); }
+
+    @Override
+    // isChartAnimatedOnce
+    public boolean isChartAnimatedOnce() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getBoolean( PREFERENCE_LINE_CHART_ANIMATED_ONCE, false ); }
+
+    @Override
+    // begin onSetChartAnimated
+    // onSetChartAnimated in preferences
+    public void onSetChartAnimated( boolean chartAnimated ) {
+
+        Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
+
+        editor.putBoolean( PREFERENCE_LINE_CHART_ANIMATED_ONCE, chartAnimated );
+
+        editor.apply();
+
+    } // end onSetChartAnimated
+
+    @Override
+    // getLineChartAnimationFrequencyPreference
+    public String getLineChartAnimationFrequencyPreference() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY, null ); }
 
     /**
      * Other Methods
      */
 
-    // begin method initializeUI
-    private int initializeUI() {
-
-return -1;
-    } // end method initializeUI
+    // begin method getCurrentFragmentName
+    // gets the name of the fragment currently on top of the back stack
+    // using the passed fragment manager
+    private String getCurrentFragmentName( FragmentManager fragmentManager ) { return fragmentManager.getBackStackEntryAt( fragmentManager.getBackStackEntryCount() - 1 ).getName(); }
 
 } // end activity MainActivity

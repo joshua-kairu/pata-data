@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -50,6 +51,14 @@ public class ChartDisplayDatasetFragment extends Fragment {
     /** CONSTANTS */
 
     /** VARIABLES */
+
+    /** Line Chart Animation Listeners */
+
+    private LineChartAnimationListener lineChartAnimationListener; // listener for the line chart's animation
+
+    /** PreferencesInterface */
+
+    private PreferencesInterface preferencesInterface; // a preferences interface
 
     /** Response JSON Listeners */
 
@@ -99,6 +108,8 @@ public class ChartDisplayDatasetFragment extends Fragment {
         // 0. super things
         // 1. initialize the selected dataset name listener
         // 2. initialize the response JSON listener
+        // 3. initialize the line chart animation listener
+        // 4. initialize the preferences interface
 
         // 0. super things
 
@@ -124,6 +135,26 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
         catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement ResponseJSONListener." ); }
 
+        // 3. initialize the line chart animation listener
+
+        // try to initialize the line chart animation listener
+
+        try { lineChartAnimationListener = ( LineChartAnimationListener ) getActivity(); }
+
+        // problems of casting
+
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement LineChartAnimationListener." ); }
+
+        // 4. initialize the preferences interface
+
+        // try to initialize the preferences interface
+
+        try { preferencesInterface = ( PreferencesInterface ) getActivity(); }
+
+        // problems of casting
+
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement PreferencesInterface." ); }
+
     } // end onAttach
 
     @Override
@@ -140,9 +171,17 @@ public class ChartDisplayDatasetFragment extends Fragment {
         // 2c. define an array list of x axis labels containing all the years found in the fetched dataset
         // 2d. create the chart
         // 2e. set chart data from what we have already defined
-        // 2f. set a chart description
+        // 2e1. do not draw values on the line chart's data
+        // 2f. set a chart description optionally
         // 2g. use colors optionally
         // 2h. animate the X axis
+        // 2h1. if the user prefers to have the chart animate once
+        // 2h1a. if the chart has not yet animated
+        // 2h1a1. animate the X axis
+        // 2h1a2. flip the flag to show that the chart has been animated
+        // 2i. put the X axis on the bottom
+        // 2j. draw only the left Y axis
+        // 2k. Y Axis starts at 0
         // 3. return the inflated view
 
         // 0. inflate the chart display datasets layout
@@ -189,9 +228,13 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
         lineChart.setData( lineChartData );
 
+        // 2e1. do not draw values on the line chart's data
+
+        lineChartData.setDrawValues( false );
+
         // 2f. set a chart description
 
-        lineChart.setDescription( selectedDatasetListener.getSelectedDatasetName() );
+        lineChart.setDescription( "" );
 
         // 2g. use colors optionally
 
@@ -199,7 +242,39 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
         // 2h. animate the X axis
 
-        lineChart.animateX( 5000 );
+        // 2h1. if the user prefers to have the chart animate once
+
+        // begin if for if the user prefers to have the chart animate once
+        if( preferencesInterface.getLineChartAnimationFrequencyPreference().equals( MainActivity.PREFERENCE_LINE_CHART_ANIMATE_ONCE ) == true ) {
+
+            // 2h1a. if the chart has not yet animated
+
+            // begin if for if the chart has not yet animated
+            if ( lineChartAnimationListener.isChartAnimatedOnce() == false ) {
+
+                // 2h1a1. animate the X axis
+
+                lineChart.animateX( 5000 );
+
+                // 2h1a2. flip the flag to show that the chart has been animated
+
+                lineChartAnimationListener.onSetChartAnimated( true );
+
+            } // end if for if the chart has not yet animated
+
+        } // end if for if the user prefers to have the chart animate once
+
+        // 2i. put the X axis on the bottom
+
+        lineChart.getXAxis().setPosition( XAxis.XAxisPosition.BOTTOM );
+
+        // 2j. draw only the left Y axis
+
+        lineChart.getAxisRight().setEnabled( false );
+
+        // 2k. Y Axis starts at 0
+
+        lineChart.getAxisLeft().setAxisMinValue( 0f );
 
         // 3. return the inflated view
 

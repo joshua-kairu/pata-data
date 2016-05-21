@@ -45,6 +45,10 @@ public class ChooseDatasetFragment extends Fragment {
 
     /** VARIABLES */
 
+    /** Line Chart Animation Listeners */
+
+    private LineChartAnimationListener lineChartAnimationListener; // listener for the line chart's animation
+
     /** Request URL Listeners */
 
     private RequestURLListener requestURLListener; // a listener of the request URL
@@ -85,6 +89,7 @@ public class ChooseDatasetFragment extends Fragment {
         // 0. super things
         // 1. initialize the request URL
         // 2. initialize the selected dataset name listener
+        // 3. initialize the line chart animation listener
 
         // 0. super things
 
@@ -109,6 +114,17 @@ public class ChooseDatasetFragment extends Fragment {
         // problems of casting
 
         catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement SelectedDatasetListener." ); }
+
+        // 3. initialize the line chart animation listener
+
+        // try to initialize the line chart animation listener
+
+        try { lineChartAnimationListener = ( LineChartAnimationListener ) getActivity(); }
+
+        // problems of casting
+
+        catch ( ClassCastException e ) { Log.e( getClass().getSimpleName(), getActivity().toString() + " must implement LineChartAnimationListener." ); }
+
     } // end onAttach
 
     @Override
@@ -116,6 +132,7 @@ public class ChooseDatasetFragment extends Fragment {
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
 
         // 0. use the choose dataset layout
+        // 0a. make the line chart not animated
         // 1. initialize UI
         // 1a. initialize the datasets spinner
         // 1a1. create an ArrayAdapter using the World Bank datasets and a default spinner layout
@@ -140,6 +157,10 @@ public class ChooseDatasetFragment extends Fragment {
         // 0. use the choose dataset layout
 
         View rootView = inflater.inflate( R.layout.fragment_choose_dataset, container, false );
+
+        // 0a. make the line chart not animated
+
+        lineChartAnimationListener.onSetChartAnimated( false );
 
         // 1. initialize UI -> done in initializeUI
 
