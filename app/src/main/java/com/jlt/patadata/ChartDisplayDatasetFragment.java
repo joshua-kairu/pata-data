@@ -195,7 +195,7 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
         // 1. get the datasets from the response JSON
 
-        ArrayList< Dataset > datasets = WorldBankJSONUtils.getDatasetsFromJSON( responseJSONListener.getResponseJSON() );
+        ArrayList< Dataset > datasets = WorldBankJSONUtils.getDatasetsFromJSON( responseJSONListener.getResponseJSON(), WorldBankJSONUtils.SORT_ASCENDING );
 
         // 2. set up the chart
 
