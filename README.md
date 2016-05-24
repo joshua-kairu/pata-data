@@ -8,14 +8,14 @@ built on top of the [Android Volley Framework] (https://developer.android.com/tr
 
 ## Abilities :muscle:
 
-This app has the superpowers :muscle: to:
+This app has the superpowers to:
 * fetch (some relevant) World Bank datasets about Kenya in JSON form.
 * display those datasets in a scrollable list.
 * and in graph form.
 
 ## Limitations :worried:
 
-This app is currently unable :-1: to:
+This app is currently unable to:
 * fetch datasets about another country.
 
 ## Possible Future Work :fast_forward:
