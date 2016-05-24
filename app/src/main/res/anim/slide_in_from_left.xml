@@ -2,7 +2,9 @@
 
 <!--
 
- Pata Data - Displays World Bank JSON on Kenya
+ Animation Tester
+
+ Utility project to test Android animations
 
  Copyright (C) 2016 Kairu Joshua Wambugu
 
@@ -21,17 +23,24 @@
 
  -->
 
-<resources>
+<!-- Slides the view in from the left -->
 
-    <!-- Animation Times -->
+<set
 
-    <!-- Loading -->
+    xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <integer name="animation_time_loading">1000</integer>
+    >
 
-    <integer name="animation_time_card_flip_time_full">1000</integer>
-    <integer name="animation_time_card_flip_time_half">500</integer>
+    <!-- 0. move the view in from the left -->
 
-    <integer name="animation_time_slide_and_shrink">500</integer>
+    <translate
 
-</resources>
+        android:fromXDelta="-100%p"
+
+        android:toXDelta="0%p"
+
+        android:duration="@integer/animation_time_slide_and_shrink"
+
+        />
+
+</set>

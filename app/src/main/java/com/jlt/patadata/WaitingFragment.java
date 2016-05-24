@@ -108,8 +108,6 @@ public class WaitingFragment extends Fragment {
      * Overrides
      */
 
-
-
     @Override
     // begin onCreateView
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
@@ -200,6 +198,8 @@ public class WaitingFragment extends Fragment {
 
                                 .beginTransaction()
 
+                                .setCustomAnimations( R.anim.slide_in_from_right, R.anim.slide_out_to_left )
+
                                 .replace( R.id.m_fl_content, new ChartDisplayDatasetFragment() )
 
                                 .addToBackStack( MainActivity.FRAGMENT_CHART_DISPLAY_DATASET )
@@ -227,12 +227,7 @@ public class WaitingFragment extends Fragment {
 
                                 .beginTransaction()
 
-                                // set custom animation for
-                                // when the fragment enters from the right or entered after the back button pops, leading to an enter
-                                // when the fragment leaves from the left or left after the back button pops leading to an exit
-                                .setCustomAnimations(
-                                        R.anim.card_flip_right_in, R.anim.card_flip_right_out,
-                                        R.anim.card_flip_left_in, R.anim.card_flip_left_out )
+                                .setCustomAnimations( R.anim.slide_in_from_right, R.anim.slide_out_to_left )
 
                                 .replace( R.id.m_fl_content, new ErrorFragment() )
 

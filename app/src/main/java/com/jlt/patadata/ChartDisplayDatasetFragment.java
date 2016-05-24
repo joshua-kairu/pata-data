@@ -329,6 +329,8 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
                     .beginTransaction()
 
+                    .setCustomAnimations( R.anim.slide_in_from_right, R.anim.slide_out_to_left )
+
                     .replace( R.id.m_fl_content, new TableDisplayDatasetFragment() )
 
                     // 0b. add the table fragment to the backstack
