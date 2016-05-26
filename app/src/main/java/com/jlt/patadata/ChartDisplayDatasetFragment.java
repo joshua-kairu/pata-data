@@ -1,7 +1,10 @@
 package com.jlt.patadata;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -179,6 +182,8 @@ public class ChartDisplayDatasetFragment extends Fragment {
         // 2h1a. if the chart has not yet animated
         // 2h1a1. animate the X axis
         // 2h1a2. flip the flag to show that the chart has been animated
+        // 2h2. else
+        // 2h2a. animate always
         // 2i. put the X axis on the bottom
         // 2j. draw only the left Y axis
         // 2k. Y Axis starts at 0
@@ -245,8 +250,12 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
         // 2h1. if the user prefers to have the chart animate once
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences( getActivity() );
+
+        String lineChartAnimationFrequencyPreference = sharedPreferences.getString( MainActivity.PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY, null );
+
         // begin if for if the user prefers to have the chart animate once
-        if( preferencesInterface.getLineChartAnimationFrequencyPreference().equals( MainActivity.PREFERENCE_LINE_CHART_ANIMATE_ONCE ) == true ) {
+        if( lineChartAnimationFrequencyPreference.equals( MainActivity.PREFERENCE_CHART_ANIMATE_ONCE ) == true ) {
 
             // 2h1a. if the chart has not yet animated
 
@@ -264,6 +273,13 @@ public class ChartDisplayDatasetFragment extends Fragment {
             } // end if for if the chart has not yet animated
 
         } // end if for if the user prefers to have the chart animate once
+
+        // 2h2. else
+
+        // 2h2a. animate always
+
+        // else for when the user prefers the chart animated always
+        else { lineChart.animateX( 5000 ); }
 
         // 2i. put the X axis on the bottom
 
@@ -313,8 +329,10 @@ public class ChartDisplayDatasetFragment extends Fragment {
         // 0. if the table option is selected,
         // 0a. switch to the table fragment
         // 0b. add the table fragment to the backstack
-        // 1. else
-        // 1a. super things
+        // 1. else if the settings option is selected
+        // 1a. switch to the settings activity
+        // 2. else
+        // 2a. super things
 
         // 0. if the table option is selected,
 
@@ -343,9 +361,24 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
         } // end if for if the selected item is the table one
 
-        // 1. else
+        // 1. else if the settings option is selected
 
-        // 1a. super things
+        // begin else if for when the settings are chosen
+        else if ( item.getItemId() == R.id.action_chart_dataset_display_fragment_settings ) {
+
+            // 1a. switch to the settings activity
+
+            Intent settingsIntent = new Intent( getActivity(), SettingsActivity.class );
+
+            getActivity().startActivity( settingsIntent );
+
+            return true;
+
+        } // end else if for when the settings are chosen
+
+        // 2. else
+
+        // 2a. super things
 
         // else for otherwise
         else { return super.onOptionsItemSelected( item ); }

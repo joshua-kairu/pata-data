@@ -1,9 +1,11 @@
 package com.jlt.patadata;
 
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,23 +33,19 @@ import android.view.ViewGroup;
 
 // begin fragment SettingsActivity
 // handles settings
-public class SettingsActivity extends PreferenceFragment {
+public class SettingsActivity extends PreferenceActivity {
 
     /** CONSTANTS */
 
     /** VARIABLES */
 
-    /**
-     * CONSTRUCTOR
-     */
-
-    // empty constructor for fragment subclasses
-    public SettingsActivity() {
-    }
-
     /** METHODS */
 
     /** Getters and Setters */
+
+    /**
+     * Overrides
+     */
 
     @Override
     // begin onCreate
@@ -66,19 +64,6 @@ public class SettingsActivity extends PreferenceFragment {
 
     } // end onCreate
 
-    /**
-     * Overrides
-     */
-
-
-
-    @Override
-    // begin onCreateView
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-
-        return null;
-
-    } // end onCreateView
 
     /** Other Methods */
 

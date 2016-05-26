@@ -1,14 +1,19 @@
 package com.jlt.patadata;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -69,6 +74,10 @@ public class WaitingFragment extends Fragment {
 
     /** Getters and Setters */
 
+    /**
+     * Overrides
+     */
+
     @Override
     // begin onAttach
     public void onAttach( Context context ) {
@@ -103,10 +112,6 @@ public class WaitingFragment extends Fragment {
 
 
     } // end onAttach
-
-    /**
-     * Overrides
-     */
 
     @Override
     // begin onCreateView

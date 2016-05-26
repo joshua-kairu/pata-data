@@ -1,6 +1,7 @@
 package com.jlt.patadata;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -60,13 +61,13 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     PREFERENCE_RESPONSE_JSON = "PREFERENCE_RESPONSE_JSON", // string to identify the preference for storing the response JSON
 
-    PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY = "PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY", // string to identify the preference for storing the how many times the line chart should be animated
+    PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY = "PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY", // string to identify the preference for storing the how many times the line chart should be animated
 
-    PREFERENCE_LINE_CHART_ANIMATE_ONCE = "PREFERENCE_LINE_CHART_ANIMATE_ONCE", // string to specify the line chart should be animated only once
+    PREFERENCE_CHART_ANIMATE_ONCE = "PREFERENCE_CHART_ANIMATE_ONCE", // string to specify the line chart should be animated only once
 
-    PREFERENCE_LINE_CHART_ANIMATE_ALWAYS = "PREFERENCE_LINE_CHART_ANIMATE_ALWAYS", // string to specify the line chart should be animated always
+    PREFERENCE_CHART_ANIMATE_ALWAYS = "PREFERENCE_CHART_ANIMATE_ALWAYS", // string to specify the line chart should be animated always
 
-    PREFERENCE_LINE_CHART_ANIMATED_ONCE = "PREFERENCE_LINE_CHART_ANIMATED_ONCE"; // string to specify whether the line chart has been animated once
+    PREFERENCE_CHART_ANIMATED_ONCE = "PREFERENCE_CHART_ANIMATED_ONCE"; // string to specify whether the line chart has been animated once
 
     /** VARIABLES */
 
@@ -94,7 +95,9 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     public void onCreate( Bundle savedInstanceState ) {
 
         // 0. super things
-        // 0a. make sure the chart is animated once
+        // 0a. set default values of preferences
+        // 0a1. animate chart once
+        // 0a2. round off to 2 decimal places
         // 1. use the main activity layout
         // 1a. set the bar title to be the name of the app
         // 2. if the app is running first time (so the saved instance state will be null) (done to avoid blushes with screen rotation)
@@ -107,22 +110,16 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
         super.onCreate( savedInstanceState );
 
-        // 0a. make sure the chart is animated once
+        // 0a. set default values of preferences
 
-        // begin if for if the line chart preference is not to animate once
-        // this can be if the preference has not been set yet or has been set a a different value
-        if (
-                getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY, null ) == null
-                ||
-                getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY, null ).equals( PREFERENCE_LINE_CHART_ANIMATE_ONCE ) == false ) {
+        // 0a1. animate chart once
 
-            Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
+        // 0a2. round off to 2 decimal places
 
-            editor.putString( PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY, PREFERENCE_LINE_CHART_ANIMATE_ONCE );
-
-            editor.apply();
-
-        } // end if for if the line chart preference is not to animate once
+        // boolean readAgain (the last argument) - Whether to re-read the default values.
+        // If false, this method sets the default values only if
+        // this method has never been called in the past
+        PreferenceManager.setDefaultValues( this, R.xml.xml_preferences, false );
 
         // 1. use the main activity layout
 
@@ -255,25 +252,6 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     } // end onBackPressed
 
     @Override
-    // begin onSaveInstanceState
-    // used to store the instance state for the cases of configuration changes
-    public void onSaveInstanceState( Bundle outState ) {
-
-        // 0. super things
-        // 1. store app bar title
-
-        // 0. super things
-
-        super.onSaveInstanceState( outState );
-
-        // 1. store app bar title
-
-//        outState.putCharSequence( BUNDLE_CURRENT_APP_BAR_TITLE, getSupportActionBar().getTitle().toString() );
-
-
-    } // end onSaveInstanceState
-
-    @Override
     // begin onDestroy
     protected void onDestroy() {
 
@@ -388,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     @Override
     // isChartAnimatedOnce
-    public boolean isChartAnimatedOnce() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getBoolean( PREFERENCE_LINE_CHART_ANIMATED_ONCE, false ); }
+    public boolean isChartAnimatedOnce() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getBoolean( PREFERENCE_CHART_ANIMATED_ONCE, false ); }
 
     @Override
     // begin onSetChartAnimated
@@ -397,7 +375,7 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
         Editor editor = getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).edit();
 
-        editor.putBoolean( PREFERENCE_LINE_CHART_ANIMATED_ONCE, chartAnimated );
+        editor.putBoolean( PREFERENCE_CHART_ANIMATED_ONCE, chartAnimated );
 
         editor.apply();
 
@@ -405,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     @Override
     // getLineChartAnimationFrequencyPreference
-    public String getLineChartAnimationFrequencyPreference() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_LINE_CHART_ANIMATION_FREQUENCY, null ); }
+    public String getLineChartAnimationFrequencyPreference() { return getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE ).getString( PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY, null ); }
 
     /**
      * Other Methods
