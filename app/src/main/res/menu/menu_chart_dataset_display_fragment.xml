@@ -45,4 +45,18 @@
 
         />
 
+    <!-- Option for settings -->
+
+    <item
+
+        android:id="@+id/action_chart_dataset_display_fragment_settings"
+
+        android:title="@string/toolbar_settings"
+
+        android:icon="@drawable/ic_settings_white_24dp"
+
+        app:showAsAction="never"
+
+        />
+
 </menu>

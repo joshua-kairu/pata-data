@@ -39,7 +39,7 @@
 
         android:toXDelta="100%p"
 
-        android:duration="@integer/animation_time_transition_slide_and_shrink"
+        android:duration="@integer/animation_time_transition_slide"
 
         />
 

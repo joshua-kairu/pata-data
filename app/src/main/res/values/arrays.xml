@@ -33,10 +33,10 @@
     </string-array>
 
     <string-array name="preference_chart_animation_frequency_array_values">
-        <item>PREFERENCE_LINE_CHART_ANIMATE_ONCE</item>
-        <item>PREFERENCE_LINE_CHART_ANIMATE_ALWAYS</item>
+        <item>PREFERENCE_CHART_ANIMATE_ONCE</item>
+        <item>PREFERENCE_CHART_ANIMATE_ALWAYS</item>
     </string-array>
-    g
+
     <!-- Array for round off values -->
     <!-- 0 to 6 decimal places -->
     <integer-array name="preference_decimal_place_array_values">

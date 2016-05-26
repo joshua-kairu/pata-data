@@ -41,21 +41,29 @@
 
         android:key="PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY"
 
-        android:defaultValue="Once"
+        android:defaultValue="PREFERENCE_LINE_CHART_ANIMATE_ONCE"
 
-        android:entries="@array/preference_chart_animation_frequency_values"
+        android:entries="@array/preference_chart_animation_frequency_array_items"
 
-    <!-- Option to show the table -->
+        android:entryValues="@array/preference_chart_animation_frequency_array_values"
 
-    <item
+        />
 
-        android:id="@+id/action_chart_dataset_display_fragment_table"
+    <!-- List preference for round off -->
 
-        android:title="@string/toolbar_table"
+    <ListPreference
 
-        android:icon="@drawable/ic_list_white_24dp"
+        android:title="@string/preference_round_off_title"
 
-        app:showAsAction="ifRoom"
+        android:summary="@string/preference_round_off_summary"
+
+        android:key="PREFERENCE_LIST_ROUND_OFF"
+
+        android:defaultValue="2"
+
+        android:entries="@array/preference_decimal_place_array_values"
+
+        android:entryValues="@array/preference_decimal_place_array_values"
 
         />
 
