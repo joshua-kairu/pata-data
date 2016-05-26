@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+ Pata Data - Displays World Bank JSON on Kenya
+
+ Copyright (C) 2016 Kairu Joshua Wambugu
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see http://www.gnu.org/licenses/.
+
+ -->
+
+<!-- XML for the preferences -->
+
+<PreferenceScreen
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+
+    <!-- List preference for animation frequency -->
+
+    <ListPreference
+
+        android:title="@string/preference_chart_animation_frequency_title"
+
+        android:summary="@string/preference_chart_animation_frequency_summary"
+
+        android:key="PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY"
+
+        android:defaultValue="Once"
+
+        android:entries="@array/preference_chart_animation_frequency_values"
+
+    <!-- Option to show the table -->
+
+    <item
+
+        android:id="@+id/action_chart_dataset_display_fragment_table"
+
+        android:title="@string/toolbar_table"
+
+        android:icon="@drawable/ic_list_white_24dp"
+
+        app:showAsAction="ifRoom"
+
+        />
+
+</PreferenceScreen>

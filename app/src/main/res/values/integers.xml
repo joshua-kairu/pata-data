@@ -32,6 +32,8 @@
     <integer name="animation_time_card_flip_time_full">1000</integer>
     <integer name="animation_time_card_flip_time_half">500</integer>
 
-    <integer name="animation_time_slide_and_shrink">500</integer>
+    <!-- Transitions -->
+
+    <integer name="animation_time_transition_slide">500</integer>
 
 </resources>

@@ -13,9 +13,6 @@
 
     <string name="no_datasets">No dataset to display yet. :-/</string>
 
-    <!--<string name="request_for_selection_part_one">Please press</string>-->
-    <!--<string name="request_for_selection_part_two">\tto select a dataset to view</string>-->
-
     <!-- String for waiting for a fetch of the dataset -->
 
     <string name="loading">Loading. Please wait. . .</string>
@@ -36,5 +33,21 @@
     <!-- Strings for the progress svg -->
 
     <string name="progress_indicator_group">Progress indicator group</string>
+
+    <!-- Preferences -->
+
+    <!-- chart animation frequency choice title -->
+    <string name="preference_chart_animation_frequency_title">Animate chart</string>
+
+    <!-- chart animation frequency choice summary -->
+    <string name="preference_chart_animation_frequency_summary">%s</string>
+    <!-- %s for the selected frequency -->
+
+    <!-- round off choice title -->
+    <string name="preference_round_off_title">Round off</string>
+
+    <!-- round off choice summary -->
+    <string name="preference_round_off_summary">%d decimal places</string>
+    <!-- %d for the selected number of decimal places -->
 
 </resources>

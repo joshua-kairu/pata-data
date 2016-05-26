@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+ Pata Data - Displays World Bank JSON on Kenya
+
+ Copyright (C) 2016 Kairu Joshua Wambugu
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see http://www.gnu.org/licenses/.
+
+ -->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Animate when the card flips in from the left -->
+
+    <!-- Before rotating, immediately set alpha to 0 -->
+
+    <objectAnimator
+
+        android:valueFrom="1.0"
+
+        android:valueTo="0.0"
+
+        android:propertyName="alpha"
+
+        android:duration="0"
+
+        />
+
+    <!-- Rotate along the Y axis from the left to animate the flip in -->
+
+    <objectAnimator
+
+        android:valueFrom="-180"
+
+        android:valueTo="0"
+
+        android:propertyName="rotationY"
+
+        android:interpolator="@android:interpolator/accelerate_decelerate"
+
+        android:duration="@integer/animation_time_card_flip_time_full"
+
+        />
+
+    <!-- Half-way through the rotation (see startOffset), set the alpha to 1 -->
+    <!-- startOffset - Delay in milliseconds before the animation runs -->
+
+    <objectAnimator
+
+        android:valueFrom="0.0"
+
+        android:valueTo="1.0"
+
+        android:propertyName="alpha"
+
+        android:startOffset="@integer/animation_time_card_flip_time_half"
+
+        android:duration="1"
+
+        />
+
+</set>

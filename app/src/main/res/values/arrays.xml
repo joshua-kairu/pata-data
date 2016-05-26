@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+ Pata Data - Displays World Bank JSON on Kenya
+
+ Copyright (C) 2016 Kairu Joshua Wambugu
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see http://www.gnu.org/licenses/.
+
+ -->
+
+<resources>
+
+    <!-- Preferences -->
+
+    <!-- String array for chart animation frequency values -->
+    <!-- once or always -->
+    <string-array name="preference_chart_animation_frequency_array_items">
+        <item>Just once</item>
+        <item>Every time</item>
+    </string-array>
+
+    <string-array name="preference_chart_animation_frequency_array_values">
+        <item>PREFERENCE_LINE_CHART_ANIMATE_ONCE</item>
+        <item>PREFERENCE_LINE_CHART_ANIMATE_ALWAYS</item>
+    </string-array>
+    g
+    <!-- Array for round off values -->
+    <!-- 0 to 6 decimal places -->
+    <integer-array name="preference_decimal_place_array_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </integer-array>
+
+</resources>
