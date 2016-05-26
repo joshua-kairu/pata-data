@@ -39,6 +39,12 @@
     <dimen name="layout_margin_start">16dp</dimen>
     <dimen name="layout_margin_end">16dp</dimen>
 
+    <dimen name="layout_padding_top">16dp</dimen>
+    <dimen name="layout_padding_bottom">16dp</dimen>
+
+    <dimen name="layout_padding_start">16dp</dimen>
+    <dimen name="layout_padding_end">16dp</dimen>
+
     <dimen name="layout_padding">6dp</dimen>
 
     <dimen name="space_between_content_areas">8dp</dimen>

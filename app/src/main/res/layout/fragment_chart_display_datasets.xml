@@ -35,6 +35,8 @@
 
     android:layout_height="match_parent"
 
+    android:padding="@dimen/layout_padding_start"
+
     >
 
     <!-- Line chart to display the datasets -->
