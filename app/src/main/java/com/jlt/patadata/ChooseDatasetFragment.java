@@ -1,6 +1,8 @@
 package com.jlt.patadata;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -8,6 +10,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -81,6 +86,23 @@ public class ChooseDatasetFragment extends Fragment {
     /**
      * Overrides
      */
+
+    @Override
+    // begin onCreate
+    public void onCreate( @Nullable Bundle savedInstanceState ) {
+
+        // 0. super things
+        // 1. register the context menu
+
+        // 0. super things
+
+        super.onCreate( savedInstanceState );
+
+        // 1. register the context menu
+
+        setHasOptionsMenu( true );
+
+    } // end onCreate
 
     @Override
     // begin onAttach
@@ -171,6 +193,56 @@ public class ChooseDatasetFragment extends Fragment {
         return rootView;
 
     } // end onCreateView
+
+    @Override
+    // begin onCreateOptionsMenu
+    public void onCreateOptionsMenu( Menu menu, MenuInflater inflater ) {
+
+        // 0. inflate menu for showing the settings option
+        // 1. super things
+
+        // 0. inflate menu for showing the settings option
+
+        inflater.inflate( R.menu.menu_choose_dataset_fragment, menu );
+
+        // 1. super things
+
+        super.onCreateOptionsMenu( menu, inflater );
+
+    } // end onCreateOptionsMenu
+
+    @Override
+    // begin onOptionsItemSelected
+    public boolean onOptionsItemSelected( MenuItem item ) {
+
+        // 0. if the settings option is selected
+        // 0a. switch to the settings activity
+        // 1. else
+        // 1a. super things
+
+        // 0. if the settings option is selected
+
+        // begin if for if the settings are chosen
+        if ( item.getItemId() == R.id.action_chart_dataset_display_fragment_settings ) {
+
+            // 0a. switch to the settings activity
+
+            Intent settingsIntent = new Intent( getActivity(), SettingsActivity.class );
+
+            getActivity().startActivity( settingsIntent );
+
+            return true;
+
+        } // end if for if the settings are chosen
+
+        // 1. else
+
+        // 1a. super things
+
+        // else for otherwise
+        else { return super.onOptionsItemSelected( item ); }
+
+    } // end onOptionsItemSelected
 
     /** Other Methods */
 

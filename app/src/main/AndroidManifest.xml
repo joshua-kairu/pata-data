@@ -46,6 +46,16 @@
 
         </activity>
 
+        <!-- Settings Activity -->
+
+        <activity
+
+            android:name=".SettingsActivity"
+
+            android:label=".SettingsActivity"
+
+            />
+
     </application>
 
 </manifest>

@@ -31,13 +31,13 @@
 
     >
 
-    <!-- List preference for animation frequency -->
+    <!--&lt;!&ndash; List preference for animation frequency &ndash;&gt;-->
 
     <ListPreference
 
         android:title="@string/preference_chart_animation_frequency_title"
 
-        android:summary="@string/preference_chart_animation_frequency_summary"
+        android:summary="Once"
 
         android:key="PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY"
 
@@ -55,16 +55,18 @@
 
         android:title="@string/preference_round_off_title"
 
-        android:summary="@string/preference_round_off_summary"
+        android:summary="2 decimal places"
 
         android:key="PREFERENCE_LIST_ROUND_OFF"
 
         android:defaultValue="2"
 
-        android:entries="@array/preference_decimal_place_array_values"
+        android:entries="@array/preference_decimal_place_array_items"
 
         android:entryValues="@array/preference_decimal_place_array_values"
 
         />
+
+        <!--/>-->
 
 </PreferenceScreen>

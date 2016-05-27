@@ -21,40 +21,35 @@
 
  -->
 
-<!-- Menu for when one has the chart and wants to see the table -->
+<!-- A number picker for the preferences -->
+<!-- Based on Cyanogen Mod's -->
 
-<menu
+<RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
 
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    android:gravity="center_horizontal"
+
+    android:layout_width="wrap_content"
+
+    android:layout_height="match_parent"
 
     >
 
-    <!-- Option to show the table -->
+    <!-- The number picker proper -->
 
-    <item
+    <NumberPicker
 
-        android:id="@+id/action_chart_dataset_display_fragment_table"
+        android:id="@+id/pnp_np"
 
-        android:title="@string/toolbar_table"
+        android:layout_width="102dp"
 
-        android:icon="@drawable/ic_list_white_24dp"
+        android:layout_height="match_parent"
 
-        app:showAsAction="ifRoom"
-
-        />
-
-    <!-- Option for settings -->
-
-    <item
-
-        android:id="@+id/action_chart_dataset_display_fragment_settings"
-
-        android:title="@string/toolbar_settings"
-
-        android:icon="@drawable/ic_settings_white_24dp"
+        android:centerInParent="true"
 
         />
 
-</menu>
+</RelativeLayout>

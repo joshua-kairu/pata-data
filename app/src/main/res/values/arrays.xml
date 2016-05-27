@@ -25,20 +25,36 @@
 
     <!-- Preferences -->
 
-    <!-- String array for chart animation frequency values -->
+    <!-- Chart animation frequency -->
     <!-- once or always -->
+
+    <!-- String array for chart animation frequency items -->
     <string-array name="preference_chart_animation_frequency_array_items">
         <item>Just once</item>
         <item>Every time</item>
     </string-array>
 
+    <!-- String array for chart animation frequency values -->
     <string-array name="preference_chart_animation_frequency_array_values">
         <item>PREFERENCE_CHART_ANIMATE_ONCE</item>
         <item>PREFERENCE_CHART_ANIMATE_ALWAYS</item>
     </string-array>
 
-    <!-- Array for round off values -->
+    <!-- Round off -->
     <!-- 0 to 6 decimal places -->
+
+    <!-- String array for round off items -->
+    <string-array name="preference_decimal_place_array_items">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <!-- Int array for round off values -->
     <integer-array name="preference_decimal_place_array_values">
         <item>0</item>
         <item>1</item>
