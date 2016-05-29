@@ -36,4 +36,8 @@
 
     <integer name="animation_time_transition_slide">500</integer>
 
+    <!-- Preferences -->
+
+    <integer name="preference_default_round_off">2</integer>
+
 </resources>

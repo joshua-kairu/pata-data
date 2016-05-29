@@ -48,8 +48,6 @@
 
         android:layout_height="match_parent"
 
-        android:centerInParent="true"
-
         />
 
 </RelativeLayout>

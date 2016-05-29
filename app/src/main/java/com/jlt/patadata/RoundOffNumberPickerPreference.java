@@ -1,6 +1,8 @@
 package com.jlt.patadata;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -34,8 +36,6 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
     /** CONSTANTS */
 
-    private static final int DEFAULT_ROUND_OFF = 2; // the default round off
-
     /** VARIABLES */
 
     /* Number Pickers */
@@ -46,9 +46,13 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
     private int
 
-    minimumNumber, // the minimum number
+    minimumNumber; // the minimum number
 
-    maximumNumber; // the maximum number
+    private int currentNumber; // the current preference number
+
+    private int maximumNumber, // the maximum number
+
+    defaultRoundOff; // the default round off
 
     /** CONSTRUCTOR */
 
@@ -62,6 +66,7 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
         // 4. do not use an icon for the dialog
         // 5. use the minimum from the round off array
         // 6. use the maximum from the round off array
+        // 7. use the default round off from XML
 
         // 0. super things
 
@@ -93,11 +98,43 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
         setMaximumNumber( roundOffArray[ roundOffArray.length - 1 ] );
 
+        // 7. use the default round off from XML
+
+        setDefaultRoundOff( context.getResources().getInteger( R.integer.preference_default_round_off ) );
+
     } // end constructor
 
     /** METHODS */
 
     /** Getters and Setters */
+
+    // getter for the minimumNumber
+    private int getMinimumNumber() { return minimumNumber; }
+
+    // setter for the minimumNumber
+    private void setMinimumNumber( int minimumNumber ) { this.minimumNumber = minimumNumber; }
+
+    // getter for the maximumNumber
+    private int getMaximumNumber() { return maximumNumber; }
+
+    // setter for the maximumNumber
+    private void setMaximumNumber( int maximumNumber ) { this.maximumNumber = maximumNumber; }
+
+    // getter for the currentNumber
+    private int getCurrentNumber() {
+        return currentNumber;
+    }
+
+    // setter for the currentNumber
+    public void setCurrentNumber( int currentNumber ) {
+        this.currentNumber = currentNumber;
+    }
+
+    // getter for the defaultRoundOff
+    private int getDefaultRoundOff() { return defaultRoundOff; }
+
+    // setter for the defaultRoundOff
+    private void setDefaultRoundOff( int defaultRoundOff ) { this.defaultRoundOff = defaultRoundOff; }
 
     /** Overrides */
 
@@ -132,7 +169,9 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
         // 2b. current value should be the persisted one
 
-        numberPicker.setValue( getPersistedInt( DEFAULT_ROUND_OFF ) );
+        // persisted values are in string form
+        // convert to integer so as to display on the number picker
+        numberPicker.setValue( Integer.parseInt( getPersistedString( String.valueOf( getDefaultRoundOff() ) ) ) );
 
         // 3. return the view
 
@@ -154,24 +193,130 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
             // 0a. save the selected number
 
-            persistInt( numberPicker.getValue() );
+            // persisted values are in string form
+            // convert selected number to integer so as to persist it
+            persistString( String.valueOf( numberPicker.getValue() ) );
 
         } // end if for if the positive result is true
 
     } // end onDialogClosed
 
+    @Override
+    // begin onSetInitialValue
+    // Implement this to set the initial value of the Preference
+    protected void onSetInitialValue( boolean restorePersistedValue, Object defaultValue ) {
+
+        // 0. if we are to restore the persisted value
+        // 0a. restore existing state
+        // 1. else we are not
+        // 1a. use the default value passed in
+
+        // 0. if we are to restore the persisted value
+
+        // 0a. restore existing state
+
+        // default value is stored as a string
+        // needs to be converted to an integer
+        if ( restorePersistedValue == true ) { setCurrentNumber( Integer.parseInt( getPersistedString( String.valueOf( getDefaultRoundOff() ) ) ) ); }
+
+        // 1. else we are not
+
+        // 1a. use the default value passed in
+
+        else { setCurrentNumber( ( Integer ) defaultValue ); persistInt( getCurrentNumber() ); }
+
+    } // end onSetInitialValue
+
+    @Override
+    // begin onGetDefaultValue
+    // Called when a Preference is being inflated and the default value attribute needs to be read.
+    protected Object onGetDefaultValue( TypedArray typedArray, int index ) {
+
+        return typedArray.getInteger( index, defaultRoundOff );
+
+    } // end onGetDefaultValue
+
+    @Override
+    // begin onSaveInstanceState
+    protected Parcelable onSaveInstanceState() {
+
+        // 0. get the super state
+        // 1. if this preference is persistent (continually saved)
+        // 1a. no need to save instance state (since it's persistent)
+        // use superclass state
+        // 2. create instance of number preference saved state
+        // 3. set the number preference saved state's value to be the current number on the picker
+        // 4. return the number preference saved state
+
+        // 0. get the super state
+
+        final Parcelable superState = super.onSaveInstanceState();
+
+        // 1. if this preference is persistent (continually saved)
+
+        // 1a. no need to save instance state (since it's persistent)
+        // use superclass state
+
+        if ( isPersistent() == true ) { return superState; }
+
+        // 2. create instance of number preference saved state
+        final NumberPickerPreferenceSavedState numberPickerPreferenceSavedState = new NumberPickerPreferenceSavedState( superState );
+
+        // 3. set the number preference saved state's value to be the current number on the picker
+
+        numberPickerPreferenceSavedState.setValue( getCurrentNumber() );
+
+        // 4. return the number preference saved state
+
+        return numberPickerPreferenceSavedState;
+
+    } // end onSaveInstanceState
+
+    @Override
+    // begin onRestoreInstanceState
+    protected void onRestoreInstanceState( Parcelable state ) {
+
+        // 0. if we didn't save state during onSaveInstanceState
+        // 0a. call super class
+        // 0b. terminate
+        // 1. cast the state parameter to the number picker state
+        // 2. pass the cast state to superclass
+        // 3. set this preference's widget to reflect the restored state
+
+        // 0. if we didn't save state during onSaveInstanceState
+
+        // we did not save state if
+        // parameter state is null or if
+        // parameter state is not of the number picker state class
+
+        // begin if for if parameter state is null or of parameter state class is not number picker state
+        if ( state == null ||
+             state.getClass().equals( NumberPickerPreferenceSavedState.class ) == false ) {
+
+            // 0a. call super class
+
+            super.onRestoreInstanceState( state );
+
+            // 0b. terminate
+
+            return;
+
+        } // end if for if parameter state is null or of parameter state class is not number picker state
+
+        // 1. cast the state parameter to the number picker state
+
+        NumberPickerPreferenceSavedState numberPickerPreferenceSavedState = ( NumberPickerPreferenceSavedState ) state;
+
+        // 2. pass the cast state to superclass
+
+        super.onRestoreInstanceState( numberPickerPreferenceSavedState.getSuperState() );
+
+        // 3. set this preference's widget to reflect the restored state
+
+        numberPicker.setValue( numberPickerPreferenceSavedState.getValue() );
+
+    } // end onRestoreInstanceState
+
     /** Other Methods */
-
-    // getter for the minimumNumber
-    private int getMinimumNumber() { return minimumNumber; }
-
-    // setter for the minimumNumber
-    private void setMinimumNumber( int minimumNumber ) { this.minimumNumber = minimumNumber; }
-
-    // getter for the maximumNumber
-    private int getMaximumNumber() { return maximumNumber; }
-
-    // setter for the maximumNumber
-    private void setMaximumNumber( int maximumNumber ) { this.maximumNumber = maximumNumber; }
 
 } // end class RoundOffNumberPickerPreference
