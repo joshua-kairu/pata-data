@@ -230,10 +230,8 @@ public class TableDisplayDatasetFragment extends Fragment {
         // 0. if the chart option is selected,
         // 0a. switch to the chart fragment
         // 0b. add the chart fragment to the backstack
-        // 1. else if the settings option is selected
-        // 1a. switch to the settings activity
-        // 2. else
-        // 2a. super things
+        // 1. else
+        // 1a. super things
 
         // 0. if the chart option is selected,
 
@@ -262,24 +260,9 @@ public class TableDisplayDatasetFragment extends Fragment {
 
         } // end if for if the selected item is the chart one
 
-        // 1. else if the settings option is selected
+        // 1. else
 
-        // begin else if for when the settings are chosen
-        else if ( item.getItemId() == R.id.action_table_dataset_display_fragment_settings ) {
-
-            // 1a. switch to the settings activity
-
-            Intent settingsIntent = new Intent( getActivity(), SettingsActivity.class );
-
-            getActivity().startActivity( settingsIntent );
-
-            return true;
-
-        } // end else if for when the settings are chosen
-
-        // 2. else
-
-        // 2a. super things
+        // 1a. super things
 
         // else for otherwise
         else { return super.onOptionsItemSelected( item ); }

@@ -1,12 +1,15 @@
 package com.jlt.patadata;
 
 import android.content.Context;
+import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import static android.content.SharedPreferences.*;
 
@@ -67,7 +70,9 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     PREFERENCE_CHART_ANIMATE_ALWAYS = "PREFERENCE_CHART_ANIMATE_ALWAYS", // string to specify the line chart should be animated always
 
-    PREFERENCE_CHART_ANIMATED_ONCE = "PREFERENCE_CHART_ANIMATED_ONCE"; // string to specify whether the line chart has been animated once
+    PREFERENCE_CHART_ANIMATED_ONCE = "PREFERENCE_CHART_ANIMATED_ONCE", // string to specify whether the line chart has been animated once
+
+    PREFERENCE_NUMBER_PICKER_ROUND_OFF = "PREFERENCE_NUMBER_PICKER_ROUND_OFF"; // string to specify the preference for storing the number of decimal places to round off to
 
     /** VARIABLES */
 
@@ -170,18 +175,52 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     // begin onCreateOptionsMenu
     public boolean onCreateOptionsMenu( Menu menu ) {
 
-        // 0. use the empty options menu
-        // 1. return super things
+        // 0. inflate menu for showing the settings option
+        // 1. super things
 
-        // 0. use the empty options menu
+        // 0. inflate menu for showing the settings option
 
-        getMenuInflater().inflate( R.menu.menu_activity_main, menu );
+        getMenuInflater().inflate( R.menu.menu_choose_dataset_fragment, menu );
 
-        // 1. return super things
+        // 1. super things
 
-        return super.onCreateOptionsMenu( menu );
+        return true;
 
     } // end onCreateOptionsMenu
+
+    @Override
+    // begin onOptionsItemSelected
+    public boolean onOptionsItemSelected( MenuItem item ) {
+
+        // 0. if the settings option is selected
+        // 0a. switch to the settings activity
+        // 1. else
+        // 1a. super things
+
+        // 0. if the settings option is selected
+
+        // begin if for if the settings are chosen
+        if ( item.getItemId() == R.id.action_chart_dataset_display_fragment_settings ) {
+
+            // 0a. switch to the settings activity
+
+            Intent settingsIntent = new Intent( this, SettingsActivity.class );
+
+            startActivity( settingsIntent );
+
+            return true;
+
+        } // end if for if the settings are chosen
+
+        // 1. else
+
+        // 1a. super things
+
+        // else for otherwise
+        else { return super.onOptionsItemSelected( item ); }
+
+    } // end onOptionsItemSelected
+
 
     @Override
     // begin onBackPressed
@@ -393,5 +432,36 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
     // gets the name of the fragment currently on top of the back stack
     // using the passed fragment manager
     private String getCurrentFragmentName( FragmentManager fragmentManager ) { return fragmentManager.getBackStackEntryAt( fragmentManager.getBackStackEntryCount() - 1 ).getName(); }
+
+    // begin method translatePreference
+    // converts a preference to a human readable form
+    public static String translatePreference( Context context, String preferenceString ) {
+
+        // 0. if the preference is to show chart animation once
+        // 0a. return a string of that preference
+        // 1. if the preference is to show chart animation always
+        // 1a. return a string of that preference
+        // 2. otherwise
+        // 2a. return the string passed in
+
+        // 0. if the preference is to show chart animation once
+
+        // 0a. return a string of that preference
+
+        if ( preferenceString.equals( PREFERENCE_CHART_ANIMATE_ONCE ) == true ) { return context.getResources().getString( R.string.preference_chart_animate_once ); }
+
+        // 1. if the preference is to show chart animation always
+
+        // 1a. return a string of that preference
+
+        else if ( preferenceString.equals( PREFERENCE_CHART_ANIMATE_ALWAYS ) == true ) { return context.getResources().getString( R.string.preference_chart_animate_always ); }
+
+        // 2. otherwise
+
+        // 2a. return the string passed in
+
+        else { return preferenceString; }
+
+    } // end method translatePreference
 
 } // end activity MainActivity

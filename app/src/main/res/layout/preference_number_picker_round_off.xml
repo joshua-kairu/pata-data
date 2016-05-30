@@ -36,17 +36,43 @@
 
     android:layout_height="match_parent"
 
+    android:padding="@dimen/layout_padding"
+
     >
+
+    <!--TextView to inform the user what this is about -->
+
+    <TextView
+
+        android:id="@+id/pnpro_tv_inform"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/space_between_content_areas"
+
+        android:layout_marginBottom="@dimen/space_between_content_areas"
+
+        android:text="@string/preference_round_off_picker_inform"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+
+        />
 
     <!-- The number picker proper -->
 
     <NumberPicker
 
-        android:id="@+id/pnp_np"
+        android:id="@+id/pnpro_np_round_off_numbers"
 
         android:layout_width="102dp"
 
         android:layout_height="match_parent"
+
+        android:layout_below="@id/pnpro_tv_inform"
+
+        android:layout_centerHorizontal="true"
 
         />
 

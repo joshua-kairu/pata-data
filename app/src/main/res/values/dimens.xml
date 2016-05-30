@@ -39,7 +39,7 @@
     <dimen name="layout_margin_start">16dp</dimen>
     <dimen name="layout_margin_end">16dp</dimen>
 
-    <dimen name="layout_padding">6dp</dimen>
+    <dimen name="layout_padding">16dp</dimen>
 
     <dimen name="space_between_content_areas">8dp</dimen>
 

@@ -59,16 +59,4 @@
 
         />
 
-    <!-- Option for settings -->
-
-    <item
-
-        android:id="@+id/action_error_fragment_settings"
-
-        android:title="@string/toolbar_settings"
-
-        android:icon="@drawable/ic_settings_white_24dp"
-
-        />
-
 </menu>

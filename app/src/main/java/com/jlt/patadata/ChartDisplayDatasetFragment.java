@@ -363,18 +363,18 @@ public class ChartDisplayDatasetFragment extends Fragment {
 
         // 1. else if the settings option is selected
 
-        // begin else if for when the settings are chosen
-        else if ( item.getItemId() == R.id.action_chart_dataset_display_fragment_settings ) {
-
-            // 1a. switch to the settings activity
-
-            Intent settingsIntent = new Intent( getActivity(), SettingsActivity.class );
-
-            getActivity().startActivity( settingsIntent );
-
-            return true;
-
-        } // end else if for when the settings are chosen
+//        // begin else if for when the settings are chosen
+//        else if ( item.getItemId() == R.id.action_chart_dataset_display_fragment_settings ) {
+//
+//            // 1a. switch to the settings activity
+//
+//            Intent settingsIntent = new Intent( getActivity(), SettingsActivity.class );
+//
+//            getActivity().startActivity( settingsIntent );
+//
+//            return true;
+//
+//        } // end else if for when the settings are chosen
 
         // 2. else
 

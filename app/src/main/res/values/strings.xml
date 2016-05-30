@@ -65,11 +65,23 @@
     <string name="preference_chart_animation_frequency_summary">%s</string>
     <!-- %s for the selected frequency -->
 
+    <string name="preference_chart_animate_once">Just once</string>
+    <string name="preference_chart_animate_always">Every time</string>
+
+    <string name="preference_chart_animation_frequency_start_summary">Select how often the line chart will animate</string>
+
     <!-- round off choice title -->
     <string name="preference_round_off_title">Round off</string>
 
     <!-- round off choice summary -->
-    <string name="preference_round_off_summary">%d decimal places</string>
+    <string name="preference_round_off_summary_not_one">%d decimal places</string>
+    <string name="preference_round_off_summary_one">%d decimal place</string>
     <!-- %d for the selected number of decimal places -->
+
+    <string name="preference_problem">Err, something went wrong there. . .</string>
+
+    <string name="preference_round_off_picker_inform">Select the number of decimal points to round data to</string>
+
+    <string name="preference_round_off_picker_start_summary">Choose the number of decimal points to round data to</string>
 
 </resources>

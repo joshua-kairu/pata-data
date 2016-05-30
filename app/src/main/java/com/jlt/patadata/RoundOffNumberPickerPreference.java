@@ -121,7 +121,7 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
     private void setMaximumNumber( int maximumNumber ) { this.maximumNumber = maximumNumber; }
 
     // getter for the currentNumber
-    private int getCurrentNumber() {
+    public int getCurrentNumber() {
         return currentNumber;
     }
 
@@ -157,7 +157,7 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
         // 1. get the number picker
 
-        numberPicker = ( NumberPicker ) rootView.findViewById( R.id.pnp_np );
+        numberPicker = ( NumberPicker ) rootView.findViewById( R.id.pnpro_np_round_off_numbers );
 
         // 2. initialize the number picker
 
@@ -171,7 +171,7 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
         // persisted values are in string form
         // convert to integer so as to display on the number picker
-        numberPicker.setValue( Integer.parseInt( getPersistedString( String.valueOf( getDefaultRoundOff() ) ) ) );
+        numberPicker.setValue( getPersistedInt( getDefaultRoundOff() ) );
 
         // 3. return the view
 
@@ -193,9 +193,7 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
             // 0a. save the selected number
 
-            // persisted values are in string form
-            // convert selected number to integer so as to persist it
-            persistString( String.valueOf( numberPicker.getValue() ) );
+            persistInt( numberPicker.getValue() );
 
         } // end if for if the positive result is true
 
@@ -217,7 +215,10 @@ public class RoundOffNumberPickerPreference extends DialogPreference {
 
         // default value is stored as a string
         // needs to be converted to an integer
-        if ( restorePersistedValue == true ) { setCurrentNumber( Integer.parseInt( getPersistedString( String.valueOf( getDefaultRoundOff() ) ) ) ); }
+        if ( restorePersistedValue == true ) {
+
+            // the persisted value is an integer
+            setCurrentNumber( getPersistedInt( getDefaultRoundOff() ) ); }
 
         // 1. else we are not
 

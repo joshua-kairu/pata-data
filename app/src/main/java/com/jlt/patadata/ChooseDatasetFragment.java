@@ -194,56 +194,6 @@ public class ChooseDatasetFragment extends Fragment {
 
     } // end onCreateView
 
-    @Override
-    // begin onCreateOptionsMenu
-    public void onCreateOptionsMenu( Menu menu, MenuInflater inflater ) {
-
-        // 0. inflate menu for showing the settings option
-        // 1. super things
-
-        // 0. inflate menu for showing the settings option
-
-        inflater.inflate( R.menu.menu_choose_dataset_fragment, menu );
-
-        // 1. super things
-
-        super.onCreateOptionsMenu( menu, inflater );
-
-    } // end onCreateOptionsMenu
-
-    @Override
-    // begin onOptionsItemSelected
-    public boolean onOptionsItemSelected( MenuItem item ) {
-
-        // 0. if the settings option is selected
-        // 0a. switch to the settings activity
-        // 1. else
-        // 1a. super things
-
-        // 0. if the settings option is selected
-
-        // begin if for if the settings are chosen
-        if ( item.getItemId() == R.id.action_chart_dataset_display_fragment_settings ) {
-
-            // 0a. switch to the settings activity
-
-            Intent settingsIntent = new Intent( getActivity(), SettingsActivity.class );
-
-            getActivity().startActivity( settingsIntent );
-
-            return true;
-
-        } // end if for if the settings are chosen
-
-        // 1. else
-
-        // 1a. super things
-
-        // else for otherwise
-        else { return super.onOptionsItemSelected( item ); }
-
-    } // end onOptionsItemSelected
-
     /** Other Methods */
 
     // begin method initializeUI

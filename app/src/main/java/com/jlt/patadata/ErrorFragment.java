@@ -142,10 +142,8 @@ public class ErrorFragment extends Fragment {
         // 0b. add the choose dataset fragment to the backstack
         // 1. if refresh is selected
         // 1a. switch to the waiting fragment
-        // 2. else if the settings option is selected
-        // 2a. switch to the settings activity
-        // 3. else
-        // 3a. super things
+        // 2. else
+        // 2a. super things
 
         // begin switch to determine which item was selected
         switch ( item.getItemId() ) {
@@ -192,23 +190,11 @@ public class ErrorFragment extends Fragment {
 
                 return true;
 
-            // 2. else if the settings option is selected
-
-            case R.id.action_error_fragment_settings:
-
-                // 2a. switch to the settings activity
-
-                Intent settingsIntent = new Intent( getActivity(), SettingsActivity.class );
-
-                getActivity().startActivity( settingsIntent );
-
-                return true;
-
-            // 3. else
+            // 2. else
 
             default:
 
-                // 3a. super things
+                // 2a. super things
 
                 return super.onOptionsItemSelected( item );
 
