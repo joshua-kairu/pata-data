@@ -40,6 +40,16 @@ public class MainActivity extends AppCompatActivity implements RequestURLListene
 
     /** CONSTANTS */
 
+    /* Integers */
+
+    public static final int
+
+    /* Preference Constants */
+
+    PREFERENCE_DEFAULT_VALUE_ROUND_OFF = -2; // integer for the default value for when no round off is given
+
+    /* Strings */
+
     public static final String
 
     /** Fragment Constants */

@@ -5,7 +5,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 
@@ -108,49 +107,11 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     // called when a shared preference is changed, added, or removed
     public void onSharedPreferenceChanged( SharedPreferences sharedPreferences, String key ) {
 
-        // 0. if the changed preference is the animation one
-        // 0a. show the changed animation frequency in the animation preference summary
-        // 1. if the changed preference is the round off one
-        // 1a. show the changed round off in the round off preference summary
+        // 0. update the preferences
 
-        // 0. if the changed preference is the animation one
+        // 0. update the preferences
 
-        // begin if for if the changed pref's key is the animation one
-        if ( key.equals( MainActivity.PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY ) == true ) {
-
-            Preference chartAnimationFrequencyPreference = findPreference( key );
-
-            // 0a. show the changed animation frequency in the animation preference summary
-
-            chartAnimationFrequencyPreference.setSummary(
-                    getResources().getString( R.string.preference_chart_animation_frequency_summary,
-                                              MainActivity.translatePreference( this, sharedPreferences.getString( key, getResources().getString( R.string.preference_problem ) ) )
-                                               )
-            );
-
-        } // end if for if the changed pref's key is the animation one
-
-        // 1. if the changed preference is the round off one
-
-        // begin if for if the changed pref's the round off one
-        if ( key.equals( MainActivity.PREFERENCE_NUMBER_PICKER_ROUND_OFF ) == true ) {
-
-            Preference roundOffPreference = findPreference( key );
-
-            // 1a. show the changed round off in the round off preference summary
-
-            int roundOffDecimalPlace = sharedPreferences.getInt( key, -2 );
-
-            roundOffPreference.setSummary(
-                    getResources().getString(
-
-                            // sanitize the output so that it does not say one decimal places ;-)
-                            ( roundOffDecimalPlace != 1 ) ? R.string.preference_round_off_summary_not_one : R.string.preference_round_off_summary_one,
-                            roundOffDecimalPlace )
-
-            );
-
-        } // end if for if the changed pref's the round off one
+        updatePreferenceSummaryOnChange( sharedPreferences, key );
 
     } // end onSharedPreferenceChanged
 
@@ -183,13 +144,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
         // 1a. update it as needed
 
-        else{ updatePreferenceSummary( preference ); }
+        else{ updatePreferenceSummaryOnInitialize( preference ); }
 
     } // end method initializeSummaries
 
-    // begin method updatePreferenceSummary
-    // updates the summary of the passed preference
-    private void updatePreferenceSummary ( Preference preference ) {
+    // begin method updatePreferenceSummaryOnInitialize
+    // updates the summary of the passed preference during the initialization phase
+    private void updatePreferenceSummaryOnInitialize( Preference preference ) {
 
         // 0. if the passed pref is a list
         // 0a. set its summary as the list's current entry
@@ -234,6 +195,56 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
         } // end if for if the pref is a number picker
 
-    } // end method updatePreferenceSummary
+    } // end method updatePreferenceSummaryOnInitialize
+
+    // begin method updatePreferenceSummaryOnChange
+    private void updatePreferenceSummaryOnChange( SharedPreferences sharedPreferences, String preferenceKey ) {
+
+        // 0. if the changed preference is the animation one
+        // 0a. show the changed animation frequency in the animation preference summary
+        // 1. if the changed preference is the round off one
+        // 1a. show the changed round off in the round off preference summary
+
+        // 0. if the changed preference is the animation one
+
+        // begin if for if the changed pref's key is the animation one
+        if ( preferenceKey.equals( MainActivity.PREFERENCE_LIST_CHART_ANIMATION_FREQUENCY ) == true ) {
+
+            Preference chartAnimationFrequencyPreference = findPreference( preferenceKey );
+
+            // 0a. show the changed animation frequency in the animation preference summary
+
+            chartAnimationFrequencyPreference.setSummary(
+                    getResources().getString( R.string.preference_chart_animation_frequency_summary,
+                            MainActivity.translatePreference( this, sharedPreferences.getString( preferenceKey, getResources().getString( R.string.preference_problem ) ) )
+                    )
+            );
+
+        } // end if for if the changed pref's key is the animation one
+
+        // 1. if the changed preference is the round off one
+
+        // begin if for if the changed pref's the round off one
+        if ( preferenceKey.equals( MainActivity.PREFERENCE_NUMBER_PICKER_ROUND_OFF ) == true ) {
+
+            Preference roundOffPreference = findPreference( preferenceKey );
+
+            // 1a. show the changed round off in the round off preference summary
+
+            int roundOffDecimalPlace = sharedPreferences.getInt( preferenceKey, MainActivity.PREFERENCE_DEFAULT_VALUE_ROUND_OFF );
+
+            // begin roundOffPreference.setSummary
+            roundOffPreference.setSummary(
+                    getResources().getString(
+
+                            // sanitize the output so that it does not say one decimal places ;-)
+                            ( roundOffDecimalPlace != 1 ) ? R.string.preference_round_off_summary_not_one : R.string.preference_round_off_summary_one,
+                            roundOffDecimalPlace )
+
+            ); // end roundOffPreference.setSummary
+
+        } // end if for if the changed pref's the round off one
+
+    } // end method updatePreferenceSummaryOnChange
 
 } // end fragment SettingsActivity

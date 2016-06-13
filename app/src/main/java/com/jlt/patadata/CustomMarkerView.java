@@ -7,6 +7,8 @@ import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 
+import org.apache.commons.math3.util.Precision;
+
 /**
  *
  * Pata Data - Displays World Bank JSON on Kenya
@@ -112,5 +114,30 @@ public class CustomMarkerView extends MarkerView {
     } // end getYOffset
 
     /** Other Methods */
+
+    // begin method roundOffEntry
+    // rounds off the entry based on the round off preference
+    private double roundOffEntry( double entryValue ) {
+
+        // 0. get the number of round offs the user prefers
+        // 1. if the user preferred round off is not the default value one
+        // 1a. return the entry rounded off by the user preferred round off
+        // 2. else return the entry value untouched
+
+        // 0. get the number of round offs the user prefers
+
+        int preferredRoundOff = getContext().getSharedPreferences( MainActivity.PREFERENCES, Context.MODE_PRIVATE ).getInt( MainActivity.PREFERENCE_NUMBER_PICKER_ROUND_OFF, MainActivity.PREFERENCE_DEFAULT_VALUE_ROUND_OFF );
+
+        // 1. if the user preferred round off is not the default value one
+
+        // 1a. return the entry rounded off by the user preferred round off
+
+        if ( preferredRoundOff != MainActivity.PREFERENCE_DEFAULT_VALUE_ROUND_OFF ) { return Precision.round( entryValue, preferredRoundOff ); }
+
+        // 2. else return the entry value untouched
+
+        else { return entryValue; }
+
+    } // end method roundOffEntry
 
 } // end class CustomMarkerView
