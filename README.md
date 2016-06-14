@@ -11,7 +11,7 @@ built on top of the [Android Volley Framework] (https://developer.android.com/tr
 Please follow these steps to use the app:
 
 :one: Install the app.<br/>
-:two:. Run the app.<br/>
+:two: Run the app.<br/>
 :three: You will find a screen that allows you to select a dataset as well as the start and end years for the dataset.<br/>
 :four: Select the search button on the bottom right to as to fetch the dataset information from World Bank.<br/>
 :five: After the data is gotten from the World Bank, it will be displayed in chart form.<br/>
@@ -45,7 +45,7 @@ This app is currently unable to:
 
 Also, there are some hurdles inherent in the World Bank datasets themselves. These include:
 * datasets missing data on particular years, 
-* datasets having ```java 0.0``` as the value for all data in all the years between the start and the end year. This scenario can be seen in the video below:
+* datasets having ```0.0``` as the value for all data in all the years between the start and the end year. This scenario can be seen in the video below:
 
 ![Pata Data - Zero Data](screen-records/pata-data-zero-data-2016-06-13-221127.gif) 
 
