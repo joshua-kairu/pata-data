@@ -9,20 +9,22 @@ built on top of the [Android Volley Framework] (https://developer.android.com/tr
 ## How To Use :wrench:
 
 Please follow these steps to use the app:
-1. Install the app.
-2. Run the app.
-3. You will find a screen that allows you to select a dataset as well as the start and end years for the dataset.
-4. Select the search button on the bottom right to as to fetch the dataset information from World Bank.
-5. After the data is gotten from the World Bank, it will be displayed in chart form.
-6. Press the back button to go back to the dataset selection screen. 
+
+:one: Install the app.<br/>
+:two:. Run the app.<br/>
+:three: You will find a screen that allows you to select a dataset as well as the start and end years for the dataset.<br/>
+:four: Select the search button on the bottom right to as to fetch the dataset information from World Bank.<br/>
+:five: After the data is gotten from the World Bank, it will be displayed in chart form.<br/>
+:six: Press the back button to go back to the dataset selection screen.<br/>
 
 The video below shows the previously mentioned steps.
 
 ![Pata Data - Basic Use](screen-records/pata-data-2016-06-13-221127.gif) 
 
 You can also choose to view the data in tabular form. Here is how to do it:
-1. In the screen showing the graphical form of the data, tap the table icon to see the data in tabular form.
-2. If you want to go back to the chart, tap the chart icon the table screen.
+
+:one: In the screen showing the graphical form of the data, tap the table icon to see the data in tabular form.<br/>
+:two: If you want to go back to the chart, tap the chart icon the table screen<br/>
 
 The video below shows this.
 
@@ -43,7 +45,8 @@ This app is currently unable to:
 
 Also, there are some hurdles inherent in the World Bank datasets themselves. These include:
 * datasets missing data on particular years, 
-* datasets having '''java 0.0''' as the value for all data in all the years between the start and the end year. This scenario can be seen in the video below:
+* datasets having ```java 0.0``` as the value for all data in all the years between the start and the end year. This scenario can be seen in the video below:
+
 ![Pata Data - Zero Data](screen-records/pata-data-zero-data-2016-06-13-221127.gif) 
 
 ## Possible Future Work :fast_forward:
