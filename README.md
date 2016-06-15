@@ -6,6 +6,12 @@ A way to access World Bank APIs for open datasets.
 Pata Data is an Android application designed to get World Bank data and display it. It is 
 built on top of the [Android Volley Framework] (https://developer.android.com/training/volley/index.html).
 
+## Version History :package:
+
+**latest**&nbsp;&nbsp;&nbsp;[Pata Data v1.0.0](https://github.com/joshua-kairu/pata-data/releases/download/v1.0.0/pata-data-v1.0.0.apk)&nbsp;&nbsp;&nbsp;Wednesday, June 15, 2016 <br/>
+
+This repo tries its best to follow the [Semantic Versioning](http://semver.org/) guidelines.
+
 ## How To Use :wrench:
 
 Please follow these steps to use the app:
